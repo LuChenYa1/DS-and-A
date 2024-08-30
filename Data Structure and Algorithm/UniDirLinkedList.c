@@ -18,7 +18,7 @@ typedef struct Node
     struct Node *pNext;
 }LLNode;
 
-void AddToHead(LLNode ** pHead, LLNode ** pEnd, char * Data)//* 在开头增加新节点
+void AddToHead(LLNode ** pHead, LLNode ** pEnd, char Data[])//* 在开头增加新节点
 {
     //创建节点
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
@@ -37,7 +37,8 @@ void AddToHead(LLNode ** pHead, LLNode ** pEnd, char * Data)//* 在开头增加新节点
         *pHead = pNewNode;//头指针指向新节点
     }
 }
-void AddToEnd(LLNode ** pHead, LLNode ** pEnd, char * Data)//* 在末尾增加新节点
+
+void AddToEnd(LLNode ** pHead, LLNode ** pEnd, char Data[])//* 在末尾增加新节点
 {
     //创建节点
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
@@ -57,97 +58,13 @@ void AddToEnd(LLNode ** pHead, LLNode ** pEnd, char * Data)//* 在末尾增加新节点
     }
 }
 
-void DeleteHead(LLNode ** pHead, LLNode ** pEnd)
-{
-    if(*pHead == NULL)//空链表
-        return;
-    if((*pHead)->pNext == NULL)//只有一个节点
-    {
-        free(*pHead);
-        *pHead = NULL;
-        *pEnd = NULL;
-    }
-    else
-    {
-        LLNode * pTemp = *pHead;
-        *pHead = (*pHead)->pNext;
-        free(pTemp);
-    }  
-}
-void DeleteNodeByIndex()
-{
-
-}
-
-void AddSomeNodeToEnd(LLNode ** pHead, LLNode ** pEnd, unsigned int Number, char * Data)
+void AddSomeNodeToEnd(LLNode ** pHead, LLNode ** pEnd, unsigned int Number, char Data[])//* 在尾部增加多个相同内容的节点
 {
     for(int i = 0; i < Number; i++)
         AddToEnd(pHead, pEnd, Data);
 }
 
-LLNode * FindNodeByIndex(LLNode * pHead, unsigned int Index)//* 通过下标查找节点
-{
-    //参数合法性检测
-    if(pHead == NULL || Index < 0)
-    {
-        printf("指针为NULL/下标无效，请检查参数");
-        return NULL;
-    }
-    //循环链表
-    int i = 0;
-    while (pHead != NULL)
-    {
-        if(i == Index)
-            return pHead;
-        i++;
-        pHead = pHead->pNext;
-    }
-    printf("下标过大，请检查参数");
-    return NULL;
-}
-
-LLNode * FindNodeByData(LLNode * pHead, char * Data)//* 通过数值查找节点
-{
-    if(pHead == NULL)
-        return NULL;//空链表
-    while (pHead != NULL)
-    {
-        if(strcmp(pHead->Data, Data) == 0)
-            return pHead;//找到了
-        pHead = pHead->pNext;
-    }
-    return NULL;//链表无符合要求的节点
-}
-
-void ChangeDataByData(LLNode * pHead, char * OldData, char * NewData)//* 修改指定数值的节点的数值（只修改第一个找到的节点）
-{
-    LLNode * pDes = FindNodeByData(pHead, OldData);
-    if(pDes != NULL)
-        strcpy(pDes->Data, NewData);
-    else
-        printf("查无此节点\n");
-}
-
-void ChangeAllDataByData(LLNode * pHead, char * OldData, char * NewData)//* 修改指定数值的节点的数值（全部符合要求的节点都进行修改）
-{
-    while(pHead != NULL)
-    {
-        if(strcmp(pHead->Data, OldData) == 0)  
-            strcpy(pHead->Data, NewData); 
-        pHead = pHead->pNext;
-    }
-    
-    /* //方法2：通过调用只修改一次的函数逐次修改全部
-    LLNode * pDes = pHead;
-    while(pDes != NULL)
-    {
-        pDes = FindNodeByData(pHead, OldData);
-        if(pDes != NULL)
-            strcpy(pDes->Data, NewData);
-    } */
-}
-
-void InsertNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index, char * Data)//* 通过下标插入节点
+void InsertNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index, char Data[])//* 通过下标插入节点
 {
     if(Index < 0)
     {
@@ -177,6 +94,138 @@ void InsertNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index, char
     }
 }
 
+void DeleteHead(LLNode ** pHead, LLNode ** pEnd)//* 删除头节点
+{
+    if(*pHead == NULL)//空链表
+        return;
+    if((*pHead)->pNext == NULL)//只有一个节点
+    {
+        free(*pHead);
+        *pHead = NULL;
+        *pEnd = NULL;
+    }
+    else
+    {
+        LLNode * pTemp = *pHead;
+        *pHead = (*pHead)->pNext;
+        free(pTemp);
+    }  
+}
+
+void DeleteEnd(LLNode ** pHead, LLNode ** pEnd)//* 删除尾节点
+{
+    if(*pHead == NULL)//空链表
+        return;
+    if((*pHead)->pNext == NULL)//只有一个节点
+    {
+        free(*pHead);
+        *pHead = NULL;
+        *pEnd = NULL;
+    }
+    else
+    {
+        LLNode * pCurrent = *pHead;
+        while(pCurrent->pNext->pNext != NULL)
+        {
+            pCurrent = pCurrent->pNext;
+        }
+        pCurrent->pNext = NULL;
+        free(*pEnd);
+        *pEnd = pCurrent;
+    }  
+}
+
+void DeleteNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index)//* 通过下标删除节点
+{
+    if(Index < 0)
+        printf("下标小于零，请检查参数");
+    else if(Index == 0)
+        DeleteHead(pHead, pEnd);
+    else
+    {
+        if((*pHead)->pNext != NULL)
+        {
+            int i = 0;
+            LLNode * pCurrent = *pHead;
+            while((*pHead)->pNext != NULL)
+            {
+                if(Index - 1 == i)
+                {
+                    LLNode * pTemp = pCurrent->pNext;
+                    pCurrent->pNext = pCurrent->pNext->pNext;
+                    free(pTemp);
+                    return;
+                }
+                i++;
+                pCurrent= pCurrent->pNext;
+            }
+        }
+    }
+    return; 
+}
+
+void ChangeDataByData(LLNode * pHead, char OldData[], char NewData[])//* 修改指定数值的节点的数值（只修改第一个找到的节点）
+{
+    LLNode * pDes = FindNodeByData(pHead, OldData);
+    if(pDes != NULL)
+        strcpy(pDes->Data, NewData);
+    else
+        printf("查无此节点\n");
+}
+
+void ChangeAllDataByData(LLNode * pHead, char OldData[], char NewData[])//* 修改指定数值的节点的数值（全部符合要求的节点都进行修改）
+{
+    while(pHead != NULL)
+    {
+        if(strcmp(pHead->Data, OldData) == 0)  
+            strcpy(pHead->Data, NewData); 
+        pHead = pHead->pNext;
+    }
+    
+    /* //方法2：通过调用只修改一次的函数逐次修改全部
+    LLNode * pDes = pHead;
+    while(pDes != NULL)
+    {
+        pDes = FindNodeByData(pHead, OldData);
+        if(pDes != NULL)
+            strcpy(pDes->Data, NewData);
+    } */
+}
+
+LLNode * FindNodeByIndex(LLNode * pHead, unsigned int Index)//* 通过下标查找节点
+{
+    //参数合法性检测
+    if(pHead == NULL || Index < 0)
+    {
+        printf("指针为NULL/下标无效，请检查参数");
+        return NULL;
+    }
+    //循环链表
+    int i = 0;
+    while (pHead != NULL)
+    {
+        if(i == Index)
+            return pHead;
+        i++;
+        pHead = pHead->pNext;
+    }
+    printf("下标过大，请检查参数");
+    return NULL;
+}
+
+LLNode * FindNodeByData(LLNode * pHead, char Data[])//* 通过数值查找节点
+{
+    if(pHead == NULL)
+        return NULL;//空链表
+    while (pHead != NULL)
+    {
+        if(strcmp(pHead->Data, Data) == 0)
+            return pHead;//找到了
+        pHead = pHead->pNext;
+    }
+    return NULL;//链表无符合要求的节点
+}
+
 void FreeList(LLNode ** pHead, LLNode ** pEnd)//* 释放链表空间，头尾指针清零
 {
     LLNode * pCurrent = *pHead;
@@ -203,8 +252,8 @@ void ShowList_Data(LLNode *  pHead)//* 打印链表
 
 int main(void)
 {
-    struct Node * pHead = NULL;
-    struct Node * pEnd = NULL;
+    LLNode * pHead = NULL;
+    LLNode * pEnd = NULL;
     
     //增加节点
     AddToEnd(&pHead, &pEnd, "FFFFFFFFF");
@@ -212,24 +261,36 @@ int main(void)
     AddToEnd(&pHead, &pEnd, "1");
     AddToEnd(&pHead, &pEnd, "22");
     AddToHead(&pHead, &pEnd, "333");
-    //根据下标查找节点
-    LLNode * pTemp = FindNodeByIndex(pHead, 2);
     //增加多个节点
     AddSomeNodeToEnd(&pHead, &pEnd, 5, "ALL Same");
     //在指定下标插入节点
     InsertNodeByIndex(&pHead, &pEnd, 8, "Hello");
-    //根据数值查找节点
-    pTemp = FindNodeByData(pHead, "1");
+    //! 显示链表---增
+    ShowList_Data(pHead);
+    //删除指定下标节点
+    DeleteNodeByIndex(&pHead, &pEnd, 3);
+    //删除尾节点
+    DeleteEnd(&pHead, &pEnd);
+    //删除头节点
+    DeleteHead(&pHead, &pEnd);
+    //! 显示链表---删
+    ShowList_Data(pHead);
     //修改节点数值
     ChangeDataByData(pHead, "ALL Same", "Not Same");
     //修改节点数值（全部）
     ChangeAllDataByData(pHead, "ALL Same", "All Diff");
-    //显示链表
+    //! 显示链表---改
     ShowList_Data(pHead);
-    //删除头节点
-    DeleteHead(&pHead, &pEnd);
-    //显示链表
-    ShowList_Data(pHead);
+    //根据下标查找节点
+    LLNode * pTemp_Index = FindNodeByIndex(pHead, 2);
+    if (pTemp_Index == NULL) 
+        printf("Node at index 2 not found.\n");
+    //根据数值查找节点
+    LLNode * pTemp_Data = FindNodeByData(pHead, "1");
+    if (pTemp_Data == NULL) 
+        printf("Node with data '1' not found.\n");
+    //! 显示结果---查
+    
     //释放链表
     FreeList(&pHead, &pEnd);
 
