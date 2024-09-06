@@ -11,6 +11,8 @@
 //  º¯ÊıÄÚ¸Ä±äÖ¸ÕëĞèÒª¶ş¼¶Ö¸Õë
 //! voidº¯ÊıÖĞµÄreturn;ÆğÍË³öº¯Êı×÷ÓÃ
 
+//! ³ıÁËDeleteFirstNodeByDataº¯Êı»á·µ»ØÕÒµ½½ÚµãµÄÇ°Ò»¸ö½Úµã£¬ÆäËûº¯Êı¶¼Õı³£·µ»ØÄ¿±ê½Úµã
+
 //* ¶¨ÒåÒ»¸öµ¥Á´±í½Úµã½á¹¹Ìå */
 typedef struct Node
 {
@@ -41,6 +43,8 @@ void ChangeAllDataByData(LLNode * pHead, const char OldData[], const char NewDat
 LLNode * FindNodeByIndex(LLNode * pHead, unsigned int Index);//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
 LLNode * FindFirstNodeByData(LLNode * pHead, const char Data[]);//* Í¨¹ıÊıÖµ²éÕÒ½Úµã
 
+void SwapByData(LLNode * pHead, const char Data1[], const char Data2[]);//* ½»»»Á½¸ö½ÚµãµÄÊı¾İ
+
 void FreeList(LLNode ** pHead, LLNode ** pEnd);//* ÊÍ·ÅÁ´±í¿Õ¼ä£¬Í·Î²Ö¸ÕëÇåÁã
 void ShowList_Data(LLNode *  pHead);//* ´òÓ¡Á´±í
 
@@ -49,52 +53,57 @@ int main(void)
     LLNode * pHead = NULL;
     LLNode * pEnd = NULL;
 
-    //Ôö¼Ó½Úµã
+    //* Ôö¼Ó½Úµã
     AddToEnd(&pHead, &pEnd, "333");
     AddToHead(&pHead, &pEnd, "22");
     AddToEnd(&pHead, &pEnd, "4444");
     AddToEnd(&pHead, &pEnd, "55555");
     AddToHead(&pHead, &pEnd, "1");
-    //Ôö¼Ó¶à¸ö½Úµã
+    //* Ôö¼Ó¶à¸ö½Úµã
     AddSomeNodeToEnd(&pHead, &pEnd, 5, "Add Same");
-    //ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
+    //* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
     InsertNodeByIndex(&pHead, &pEnd, 6, "Insert1");
     InsertNodeByIndex(&pHead, &pEnd, 8, "Insert22");
     //! ÏÔÊ¾Á´±í---Ôö
     ShowList_Data(pHead);
 
-    //É¾³ıÍ·½Úµã
+    //* É¾³ıÍ·½Úµã
     DeleteHead(&pHead, &pEnd);
-    //É¾³ıÎ²½Úµã
+    //* É¾³ıÎ²½Úµã
     DeleteEnd(&pHead, &pEnd);
-    //É¾³ıÖ¸¶¨ÏÂ±ê½Úµã
+    //* É¾³ıÖ¸¶¨ÏÂ±ê½Úµã
     DeleteNodeByIndex(&pHead, &pEnd, 3);
-    //É¾³ıÖ¸¶¨ÊıÖµ½Úµã
+    //* É¾³ıÖ¸¶¨ÊıÖµ½Úµã
     DeleteFirstNodeByData(&pHead, &pEnd, "Insert1");
-    //É¾³ıÖ¸¶¨ÊıÖµµÄËùÓĞ½Úµã
+    //* É¾³ıÖ¸¶¨ÊıÖµµÄËùÓĞ½Úµã
     DeleteAllNodeByData(&pHead, &pEnd, "Add Same");
     //! ÏÔÊ¾Á´±í---É¾
     ShowList_Data(pHead);
 
-    //Ôö¼Ó¶à¸ö½Úµã
+    //* Ôö¼Ó¶à¸ö½Úµã
     AddSomeNodeToEnd(&pHead, &pEnd, 5, "Add Data");
-    //ĞŞ¸Ä½ÚµãÊıÖµ
+    //* ĞŞ¸Ä½ÚµãÊıÖµ
     ChangeFirstDataByData(pHead, "Add Data", "First Modified");
-    //ĞŞ¸Ä½ÚµãÊıÖµ£¨È«²¿£©
+    //* ĞŞ¸Ä½ÚµãÊıÖµ£¨È«²¿£©
     ChangeAllDataByData(pHead, "Add Data", "All Modified");
     //! ÏÔÊ¾Á´±í---¸Ä
     ShowList_Data(pHead);
 
-    //¸ù¾İÏÂ±ê²éÕÒ½Úµã
+    //* ¸ù¾İÏÂ±ê²éÕÒ½Úµã
     LLNode * pTemp_Index = FindNodeByIndex(pHead, 2);
     if (pTemp_Index == NULL) 
         printf("Node at index 2 not found.\n");
-    //¸ù¾İÊıÖµ²éÕÒ½Úµã
+    //* ¸ù¾İÊıÖµ²éÕÒ½Úµã
     LLNode * pTemp_Data = FindFirstNodeByData(pHead, "1");
     if (pTemp_Data == NULL) 
         printf("Node with data '1' not found.\n");
     //! ÏÔÊ¾½á¹û---²é
-    
+ 
+    //* ½»»»Á½¸ö½ÚµãÊı¾İ
+    SwapByData(pHead, "First Modified", "All Modified");
+    //! ÏÔÊ¾Á´±í---»»
+    ShowList_Data(pHead);
+
     //ÊÍ·ÅÁ´±í
     FreeList(&pHead, &pEnd);
 
@@ -369,6 +378,23 @@ LLNode * FindFirstNodeByData(LLNode * pHead, const char Data[])//* Í¨¹ıÊıÖµ²éÕÒµ
         pHead = pHead->pNext;
     }
     return NULL;//Á´±íÎŞ·ûºÏÒªÇóµÄ½Úµã
+}
+
+void SwapByData(LLNode * pHead, const char Data1[], const char Data2[])//* ½»»»Á½¸ö½ÚµãµÄÈ«²¿Êı¾İ
+{
+    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    if(pHead == NULL)
+        return;
+    LLNode *pData1 = FindFirstNodeByData(pHead, Data1);
+    LLNode *pData2 = FindFirstNodeByData(pHead, Data2);
+    if(pData1 != NULL&& pData2 != NULL)
+    {
+        /* strcpy(pData1->Data, Data2);
+        strcpy(pData2->Data, Data1); *///Ò»¸ö½ÚµãµÄÊı¾İÁ¿ºÜ¶àÊ±£¬°¤¸ö¸³ÖµºÜÂé·³
+        LLNode TempNode = *pData1;
+        memcpy(pData1, pData2, 10);
+        memcpy(pData2, &TempNode, 10);//* Ò»´ÎĞÔ¿½±´½ÚµãµÄËùÓĞ²»Í¬ÀàĞÍÊı¾İ£¬×¢ÒâËãÇå³şÊı¾İÕ¼×Ö½ÚÊı£¬²»Òª¿½±´×îºóµÄpNext
+    } 
 }
 
 void FreeList(LLNode ** pHead, LLNode ** pEnd)//* ÊÍ·ÅÁ´±í¿Õ¼ä£¬Í·Î²Ö¸ÕëÇåÁã
