@@ -37,7 +37,7 @@ int main(void)
     AddToEnd(&stHead, 5);
     AddToHead(&stHead, 2);
     AddBehandData(&stHead, 2, 3);
-    AddNodeByIndex(&stHead, 1, 1);
+    AddNodeByIndex(&stHead, 0, 1);
 
     if(FindNodeByData(&stHead, 4) == NULL)
         printf("√ª’“µΩ\n");

@@ -30,11 +30,11 @@
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
                 },
-                {
-                    "description": "防止gdb打开标准库函数",
-                    "text": "-interpreter-exec console \"skip -rfu std::.*\"",
-                    "ignoreFailures": false
-                }
+                // {
+                //     "description": "防止gdb打开标准库函数",
+                //     "text": "-interpreter-exec console \"skip -rfu std::.*\"",
+                //     "ignoreFailures": false
+                // }
             ]
         },
         {
@@ -48,7 +48,7 @@
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "D:\\A_Tool\\VSCode\\mingw-19.0\\MinGW\\bin\\gdb.exe",
+            "miDebuggerPath": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin/gdb.exe",
             "preLaunchTask": "g++",
             "setupCommands": [
                 {
@@ -65,13 +65,13 @@
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
-            //"cwd": "D:\\A_Tool\\VSCode\\mingw-19.0\\MinGW\\bin",
+            "cwd": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin",
             // "cwd": "${workspaceFolder}",
-            "cwd": "${fileDirname}",
+            //"cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "D:\\A_Tool\\VSCode\\mingw-19.0\\MinGW\\bin\\gdb.exe",
+            "miDebuggerPath": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin/gdb.exe",
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
