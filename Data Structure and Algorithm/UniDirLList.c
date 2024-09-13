@@ -178,8 +178,8 @@ void InsertNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index, cons
     else
     {
         //寻找插入位置的前一个节点
-        LLNode * pLast = FindNodeByIndex(*pHead, Index - 1);
-        if(pLast != NULL)
+        LLNode * pFormer = FindNodeByIndex(*pHead, Index - 1);
+        if(pFormer != NULL)
         {
             //创建节点
             LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
@@ -187,8 +187,8 @@ void InsertNodeByIndex(LLNode ** pHead, LLNode ** pEnd, unsigned int Index, cons
             strcpy(pNewNode->Data, Data);
             pNewNode->pNext = NULL;
             //链接
-            pNewNode->pNext = pLast->pNext;
-            pLast->pNext = pNewNode;
+            pNewNode->pNext = pFormer->pNext;
+            pFormer->pNext = pNewNode;
         }
         else
             printf("下标越界，查找前节点失败");
