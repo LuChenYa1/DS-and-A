@@ -29,6 +29,11 @@
                     "description": "将反汇编风格设置为 Intel",
                     "text": "-gdb-set disassembly-flavor intel",
                     "ignoreFailures": true
+                },
+                {
+                    "description": "防止gdb打开标准库函数",
+                    "text": "-interpreter-exec console \"skip -rfu std::.*\"",
+                    "ignoreFailures": false
                 }
             ]
         },
@@ -43,7 +48,7 @@
             "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
-            "miDebuggerPath": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin/gdb.exe",
+            "miDebuggerPath": "D:\\A_Tool\\VSCode\\mingw-19.0\\MinGW\\bin\\gdb.exe",
             "preLaunchTask": "g++",
             "setupCommands": [
                 {
@@ -60,7 +65,9 @@
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin",
+            //"cwd": "D:\\A_Tool\\VSCode\\mingw-19.0\\MinGW\\bin",
+            // "cwd": "${workspaceFolder}",
+            "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
