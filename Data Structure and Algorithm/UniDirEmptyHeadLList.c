@@ -19,6 +19,10 @@ void AddBehandData(LLNode * stHead, int PosData, int DesData);//* ÔÚÄ¿±êÊı¾İºóÃæ
 void AddNodeByIndex(LLNode * stHead, int Index, int Data);//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
 void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data);//* ÔÚÖ¸¶¨Î»ÖÃ²åÈë¶à¸ö½Úµã
 
+//* ¸Ä
+void ChangeNodeByData(LLNode * stHead, int OldData, int NewData);//* Í¨¹ıÊı¾İĞŞ¸Ä½Úµã
+void ChangeNodeByIndex(LLNode * stHead, int Index, int Data);//* Í¨¹ıÏÂ±êĞŞ¸Ä½Úµã
+
 //* ²é      ²éÕÒ½Úµã²»Éæ¼°ĞŞ¸Ä£¬¿ÉÒÔ´«Èë½á¹¹Ìå±¾Éí£¬µ«Ö´ĞĞĞ§ÂÊ±äµÍ
 LLNode * FindNodeByData(LLNode * stHead, int Data);//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 LLNode * FindNodeByIndex(LLNode * stHead, int Index);//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
@@ -40,6 +44,9 @@ int main(void)
     AddNodeByIndex(&stHead, 4, 1);
     AddSomeNodeByIndex(&stHead, 0, 3, 6);
     
+    ChangeNodeByData(&stHead, 0, 7);
+    ChangeNodeByIndex(&stHead, 7, 8);
+
     if(FindNodeByData(&stHead, 4) == NULL)
         printf("Ã»ÕÒµ½\n");
     else
@@ -140,10 +147,30 @@ void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data)//* ÔÚÖ
     }
 }
 
+void ChangeNodeByData(LLNode * stHead, int OldData, int NewData)//! Í¨¹ıÊı¾İĞŞ¸Ä½Úµã
+{
+    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    if(stHead == NULL || stHead->Data <= 0)
+        return;
+    LLNode * pTemp = FindNodeByData(stHead, OldData);
+    if(pTemp == NULL)return;
+    pTemp->Data = NewData;
+}
+
+void ChangeNodeByIndex(LLNode * stHead, int Index, int Data)//* Í¨¹ıÏÂ±êĞŞ¸Ä½Úµã
+{
+    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    if(stHead == NULL || stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)
+        return;
+    LLNode * pTemp = FindNodeByIndex(stHead, Index);
+    if(pTemp == NULL)return;
+    pTemp->Data = Data;
+}
+
 LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 {
     //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead->Data <= 0)
+    if(stHead == NULL || stHead->Data <= 0)
         return NULL;
     LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
     while(pCurrent != NULL)
@@ -158,20 +185,14 @@ LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 LLNode * FindNodeByIndex(LLNode * stHead, int Index)//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
 {
     //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)//²éÕÒÒÑ¾­´æÔÚµÄ½Úµã
+    if(stHead == NULL || stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)//²éÕÒÒÑ¾­´æÔÚµÄ½Úµã
         return NULL;
     if(Index == -1)
         return stHead;
     LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
-    int i = 0;
-    while(pCurrent != NULL)
-    {
-        if(i == Index)
-            return pCurrent;
+    for(int i = 0; i < Index; i++)//! ÒÑ¾­ÀûÓÃ½ÚµãÊıÁ¿ÅÅ³ıÏÂ±ê¹ı´óµÄ¿ÉÄÜĞÔ£¬ËùÒÔÒ»¶¨ÄÜÕÒµ½½Úµã£¬¿ÉÒÔÓÃforÑ­»·
         pCurrent = pCurrent->pNext;
-        i++;
-    }
-    return NULL;
+    return pCurrent;
 }
 
 void FreeList(LLNode * stHead)//* ÊÍ·ÅÁ´±í
