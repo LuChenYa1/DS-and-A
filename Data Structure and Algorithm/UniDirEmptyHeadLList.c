@@ -17,9 +17,9 @@ void AddToHead(LLNode * stHead, int Data);//* Í·Ìí¼Ó
 void AddToEnd(LLNode * stHead, int Data);//* Î²Ìí¼Ó
 void AddBehandData(LLNode * stHead, int PosData, int DesData);//* ÔÚÄ¿±êÊı¾İºóÃæ²åÈë½Úµã
 void AddNodeByIndex(LLNode * stHead, int Index, int Data);//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
+void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data);//* ÔÚÖ¸¶¨Î»ÖÃ²åÈë¶à¸ö½Úµã
 
-
-//* ²é
+//* ²é      ²éÕÒ½Úµã²»Éæ¼°ĞŞ¸Ä£¬¿ÉÒÔ´«Èë½á¹¹Ìå±¾Éí£¬µ«Ö´ĞĞĞ§ÂÊ±äµÍ
 LLNode * FindNodeByData(LLNode * stHead, int Data);//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 LLNode * FindNodeByIndex(LLNode * stHead, int Index);//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
 
@@ -37,8 +37,9 @@ int main(void)
     AddToEnd(&stHead, 5);
     AddToHead(&stHead, 2);
     AddBehandData(&stHead, 2, 3);
-    AddNodeByIndex(&stHead, 0, 1);
-
+    AddNodeByIndex(&stHead, 4, 1);
+    AddSomeNodeByIndex(&stHead, 0, 3, 6);
+    
     if(FindNodeByData(&stHead, 4) == NULL)
         printf("Ã»ÕÒµ½\n");
     else
@@ -111,7 +112,7 @@ void AddBehandData(LLNode * stHead, int PosData, int DesData)//* ÔÚÄ¿±êÊı¾İºóÃæ²
 void AddNodeByIndex(LLNode * stHead, int Index, int Data)//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
 {
     //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index + 1 > stHead->Data)
+    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* ¿ÉÒÔÎ²Ìí¼Ó
         return;
     LLNode * pFormer = FindNodeByIndex(stHead, Index - 1);
     if(pFormer != NULL)
@@ -122,10 +123,27 @@ void AddNodeByIndex(LLNode * stHead, int Index, int Data)//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
     }
 }
 
+void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data)//* ÔÚÖ¸¶¨Î»ÖÃ²åÈë¶à¸ö½Úµã
+{
+    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* ¿ÉÒÔÎ²Ìí¼Ó
+        return;
+    LLNode * pFormer = FindNodeByIndex(stHead, Index - 1);
+    if(pFormer != NULL)
+    {
+        for(int i = 0; i < Number; i++)
+        {
+            AddToHead(pFormer, Data);
+            pFormer->Data --;
+            stHead->Data ++;
+        }    
+    }
+}
+
 LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 {
     //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data < 0)
+    if(stHead->Data <= 0)
         return NULL;
     LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
     while(pCurrent != NULL)
@@ -140,7 +158,7 @@ LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
 LLNode * FindNodeByIndex(LLNode * stHead, int Index)//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
 {
     //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data < 0 || Index < -1)
+    if(stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)//²éÕÒÒÑ¾­´æÔÚµÄ½Úµã
         return NULL;
     if(Index == -1)
         return stHead;
