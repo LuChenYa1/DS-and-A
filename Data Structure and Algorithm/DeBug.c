@@ -37,7 +37,7 @@ LLNode * FindNodeByIndex(LLNode * pHead, int NodeCount, int Index);//* Õ®π˝œ¬±Í≤
 LLNode * FindNodeByData(LLNode * pHead, int Data);//* Õ®π˝ ˝æ›≤È’“Ω⁄µ„
 
 //∫œ≤¢”––Ú¡¥±Ì
-void MergeLList(LLNode ** pHead_A, LLNode ** pEnd_A, int * NodeCount_A, LLNode ** pHead_B, LLNode ** pEnd_B,  int * NodeCount_B);//* ∫œ≤¢¡¥±ÌµΩB£¨»∑±£”––Ú£®¥”–°µΩ¥Û£©,±£¡Ù¡¥±ÌA¬£¨ø…”√”⁄¡¥±Ì≈≈–Ú
+void MergeLList(LLNode * pHead_A, LLNode ** pHead_B, LLNode ** pEnd_B, int NodeCount_A, int * NodeCount_B);//* ∫œ≤¢¡¥±ÌµΩB£¨»∑±£”––Ú£®¥”–°µΩ¥Û£©,±£¡Ù¡¥±ÌA
 
 void PrintLList(LLNode * pHead, int NodeCount);//* ¥Ú”°¡¥±Ì
 void PrintLList_Z(LLNode * pEnd, int NodeCount);//* ∑¥œÚ¥Ú”°¡¥±Ì
@@ -91,34 +91,33 @@ int main(void)
     AddToEnd(&pHead_B, &pEnd_B, &NodeCount_B, 15);
     PrintLList(pHead_B, NodeCount_B);
     //* ∫œ≤¢¡¥±Ì
-    MergeLList(&pHead_A, &pEnd_A, &NodeCount_A, &pHead_B, &pEnd_B, &NodeCount_B);
+    MergeLList(pHead_A, &pHead_B, &pEnd_B, NodeCount_A, &NodeCount_B);
     PrintLList(pHead_B, NodeCount_B);
-    PrintLList(pHead_A, NodeCount_A);
 
     FreeLList(&pHead_A, &pEnd_A, &NodeCount_A);
     FreeLList(&pHead_B, &pEnd_B, &NodeCount_B);
     return 0;
 }
 
-void MergeLList(LLNode ** pHead_A, LLNode ** pEnd_A, int * NodeCount_A, LLNode ** pHead_B, LLNode ** pEnd_B,  int * NodeCount_B)
+void MergeLList(LLNode * pHead_A, LLNode ** pHead_B, LLNode ** pEnd_B, int NodeCount_A, int * NodeCount_B)
 {
-    if(pHead_A == NULL || pHead_B == NULL || *pHead_A == NULL || *NodeCount_A < 1)
+    if(pHead_A == NULL || pHead_B == NULL || *pHead_B == NULL || NodeCount_A < 1)
         return;
-    LLNode * pCurrent = *pHead_A;
+    LLNode * pCurrent = pHead_A;
     while(pCurrent != NULL)
     {
         LLNode * pInsertPos = NULL;
         LLNode * pInner = *pHead_B;
         LLNode * pPrevInner = NULL;
-        //! ≤È’“≤Â»ÎŒª÷√
+        // ≤È’“≤Â»ÎŒª÷√
         while(pInner != NULL && pCurrent->Data > pInner->Data)
         {
             pPrevInner = pInner;
             pInner = pInner->pNext;
         }
-        //! »Áπ˚pInnerŒ™NULL£¨Àµ√˜pCurrentµƒ ˝æ›”¶∏√≤Â»ÎµΩ¡¥±ÌBµƒŒ≤≤ø
-        //! »Áπ˚pPrevInnerŒ™NULL£¨Àµ√˜pCurrentµƒ ˝æ›”¶∏√≤Â»ÎµΩ¡¥±ÌBµƒÕ∑≤ø
-        //! ∑Ò‘Ú£¨≤Â»ÎµΩpPrevInner∫ÕpInner÷Æº‰
+        // »Áπ˚pInnerŒ™NULL£¨Àµ√˜pCurrentµƒ ˝æ›”¶∏√≤Â»ÎµΩ¡¥±ÌBµƒŒ≤≤ø
+        // »Áπ˚pPrevInnerŒ™NULL£¨Àµ√˜pCurrentµƒ ˝æ›”¶∏√≤Â»ÎµΩ¡¥±ÌBµƒÕ∑≤ø
+        // ∑Ò‘Ú£¨≤Â»ÎµΩpPrevInner∫ÕpInner÷Æº‰
         if(pInner == NULL)//÷µ◊Ó¥Û£¨Œ≤ÃÌº”
         {
             AddToEnd(pHead_B, pEnd_B, NodeCount_B, pCurrent->Data);
@@ -145,7 +144,6 @@ void MergeLList(LLNode ** pHead_A, LLNode ** pEnd_A, int * NodeCount_A, LLNode *
         }
         pCurrent = pCurrent->pNext;
     }
-    FreeLList(pHead_A, pEnd_A, NodeCount_A);
 }
 
 void AddToHead(LLNode ** pHead, LLNode ** pEnd, int * NodeCount, int Data)//* Õ∑ÃÌº”
@@ -194,7 +192,7 @@ void AddToEnd(LLNode ** pHead, LLNode ** pEnd, int * NodeCount, int Data)//* Œ≤Ã
     }
     (*pEnd) = pNewNode;//Œ≤ÃÌº”±ÿ◊ˆ£∫Œ≤÷∏’Î÷∏œÚŒ≤Ω⁄µ„
     //Ω⁄µ„ ˝¡øº”“ª
-    (*NodeCount) ++;//! ∫Û÷√++µƒ”≈œ»º∂±»*∏ﬂ£¨À˘“‘“™º”¿®∫≈
+    (*NodeCount) ++;
 }
 
 void AddNodeByIndex(LLNode ** pHead, LLNode ** pEnd, int * NodeCount, int Index, int Count, int Data)//* ‘⁄÷∏∂®œ¬±Í‘ˆº”÷∏∂® ˝¡øµƒΩ⁄µ„
@@ -237,7 +235,7 @@ void AddNodeByIndex(LLNode ** pHead, LLNode ** pEnd, int * NodeCount, int Index,
 void AddNodeBeforeData(LLNode ** pHead, LLNode ** pEnd, int * NodeCount, int PosData, int AddData)//* ‘⁄ƒø±ÍΩ⁄µ„µƒ«∞√Ê‘ˆº”Ω⁄µ„
 {
     //≤Œ ˝∫œ∑®–‘ºÏ≤‚
-    if(pHead == NULL || pEnd == NULL || NodeCount == 0)
+    if(pHead == NULL || pEnd == NULL)
         return;
     //Õ∑ÃÌº”
     if((*pHead)->Data == PosData)
@@ -411,3 +409,4 @@ void PrintLList_Z(LLNode * pEnd, int NodeCount)//∑¥œÚ¥Ú”°¡¥±Ì
     }
     putchar('\n');
 }
+
