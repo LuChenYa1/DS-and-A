@@ -97,18 +97,18 @@ int main(void)
 
     FreeLList(&pHead_A, &pEnd_A, &NodeCount_A);
     FreeLList(&pHead_B, &pEnd_B, &NodeCount_B);
-    
+
     return 0;
 }
 
 void MergeLList(LLNode ** pHead_A, LLNode ** pEnd_A, int * NodeCount_A, LLNode ** pHead_B, LLNode ** pEnd_B,  int * NodeCount_B)
 {
+    //参数合法性检测
     if(pHead_A == NULL || pHead_B == NULL || *pHead_A == NULL || *NodeCount_A < 1)
         return;
     LLNode * pCurrent = *pHead_A;
     while(pCurrent != NULL)
     {
-        LLNode * pInsertPos = NULL;
         LLNode * pInner = *pHead_B;
         LLNode * pPrevInner = NULL;
         //! 查找插入位置
@@ -121,27 +121,23 @@ void MergeLList(LLNode ** pHead_A, LLNode ** pEnd_A, int * NodeCount_A, LLNode *
         //! 如果pPrevInner为NULL，说明pCurrent的数据应该插入到链表B的头部
         //! 否则，插入到pPrevInner和pInner之间
         if(pInner == NULL)//值最大，尾添加
-        {
             AddToEnd(pHead_B, pEnd_B, NodeCount_B, pCurrent->Data);
-        }
         else if(pPrevInner == NULL)//值最小，头添加
-        {
             AddToHead(pHead_B, pEnd_B, NodeCount_B, pCurrent->Data);
-        }
         else//在最大和最小中间
         {
             // 插入新节点
             LLNode *pNewNode = (LLNode *)malloc(sizeof(LLNode));
             if(pNewNode == NULL)
-            {
-                // 这里可以添加错误处理代码，例如记录错误日志
                 return;
-            }
+            //赋值
             pNewNode->Data = pCurrent->Data;
+            //链接
             pNewNode->pPre = pPrevInner;
             pNewNode->pNext = pInner;
             pPrevInner->pNext = pNewNode;
             pInner->pPre = pNewNode;
+            //节点数量加一
             (*NodeCount_B)++;
         }
         pCurrent = pCurrent->pNext;
