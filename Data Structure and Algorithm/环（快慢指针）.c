@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <malloc.h>
 
-//! 链接时，如果涉及空头操作，则空头最后处理，防止无法索引原来的节点 （空头是索引整个链表地址的钥匙）
+//! 双向循环链表是链表的最终形态，
+//! 创建链表后操作空头改变头尾节点指向，即可变成不循环链表
+//! 逻辑上不使用pPre指针，即可变成单向链表
+
 typedef struct Node
 {
     int Data;
@@ -39,36 +42,33 @@ int main(void)
     AddToEnd(&stHead, &NodeCount, 2);
     AddToEnd(&stHead, &NodeCount, 3);
     AddToEnd(&stHead, &NodeCount, 4);
-    AddToHead(&stHead, &NodeCount, 5);
-    AddNodeByIndex(&stHead, &NodeCount, 3, 3, 6);
-    AddNodeBeforeData(&stHead, &NodeCount, 4, 7);
+    AddToEnd(&stHead, &NodeCount, 5);
+    AddToEnd(&stHead, &NodeCount, 6);
     PrintLList(&stHead, NodeCount);
 
-    DeleteNodeByIndex(&stHead, &NodeCount, 0);
-    DeleteNodeBySomeIndex(&stHead, &NodeCount, 3, 6);
-    PrintLList(&stHead, NodeCount);
+    //创建“6”型链表（环）
+    LLNode * pTemp = FindNodeByIndex(&stHead, NodeCount, NodeCount - 1); 
+    pTemp->pNext = FindNodeByIndex(&stHead, NodeCount, 2); 
+    printf("%d\n", pTemp->Data);
+    printf("%d\n", pTemp->pNext->Data);
 
-    AddNodeByIndex(&stHead, &NodeCount, 3, 3, 8);
-    PrintLList(&stHead, NodeCount);
-    DeleteNodeByData(&stHead, &NodeCount, 8);
-    PrintLList(&stHead, NodeCount);
+    //变成不循环链表
+    stHead.pPre->pNext = NULL;
+    stHead.pPre  = NULL;
 
-    LLNode * pTemp = FindNodeByData(&stHead, NodeCount, 1); 
-    if(pTemp != NULL)
-        printf("找到了\n");
-    else
-        printf("没找到\n");
-
-    pTemp = FindNodeByIndex(&stHead, NodeCount, 4); 
-    if(pTemp != NULL)
-        printf("找到了\n");
-    else
-        printf("没找到\n");
-
-    FreeLList(&stHead, &NodeCount);
-    PrintLList(&stHead, NodeCount);
+    // FreeLList(&stHead, &NodeCount);
+    // PrintLList(&stHead, NodeCount);
 
     return 0;
+}
+
+void CircleJudgment(LLNode * stHead, int NodeCount)
+{
+    //参数合法性检测
+    if(stHead == NULL || NodeCount <= 0)
+        return;
+    LLNode * pFast = stHead, * pSlow = stHead;
+   
 }
 
 LLNode * CreateNode(int Data)//* 创建一个节点
