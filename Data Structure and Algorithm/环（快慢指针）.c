@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+#include <stdbool.h>
 
 //! 双向循环链表是链表的最终形态，
 //! 创建链表后操作空头改变头尾节点指向，即可变成不循环链表
@@ -12,6 +13,8 @@ typedef struct Node
     struct Node * pPre;
     struct Node * pNext;
 }LLNode;
+
+bool CircleJudgment(LLNode * stHead, int NodeCount);//* 在双向不循环链表中检测是否有环
 
 LLNode * CreateNode(int Data);//* 创建一个节点
 
@@ -46,29 +49,42 @@ int main(void)
     AddToEnd(&stHead, &NodeCount, 6);
     PrintLList(&stHead, NodeCount);
 
-    //创建“6”型链表（环）
-    LLNode * pTemp = FindNodeByIndex(&stHead, NodeCount, NodeCount - 1); 
-    pTemp->pNext = FindNodeByIndex(&stHead, NodeCount, 2); 
-    printf("%d\n", pTemp->Data);
-    printf("%d\n", pTemp->pNext->Data);
-
     //变成不循环链表
     stHead.pPre->pNext = NULL;
     stHead.pPre  = NULL;
 
+    //创建“6”型链表（环）
+    // LLNode * pTemp = FindNodeByIndex(&stHead, NodeCount, NodeCount - 1); 
+    // pTemp->pNext = FindNodeByIndex(&stHead, NodeCount, 2); 
+    // printf("%d\n", pTemp->Data);
+    // printf("%d\n", pTemp->pNext->Data);
+
+    bool Res = CircleJudgment(&stHead, NodeCount);
+ 
+    if(Res == true)
+        printf("存在环\n");
+    else
+        printf("没有环，不循环\n");
     // FreeLList(&stHead, &NodeCount);
     // PrintLList(&stHead, NodeCount);
 
     return 0;
 }
 
-void CircleJudgment(LLNode * stHead, int NodeCount)
+bool CircleJudgment(LLNode * stHead, int NodeCount)//* 在双向不循环链表中检测是否有环
 {
     //参数合法性检测
     if(stHead == NULL || NodeCount <= 0)
-        return;
+        return false;
     LLNode * pFast = stHead, * pSlow = stHead;
-   
+    while(pFast != NULL && pFast->pNext != NULL)//! 两步跳，缺陷是从尾节点往后跳两步会出现空指针引用，异常
+    {
+        pFast = pFast->pNext->pNext;
+        pSlow = pSlow->pNext;
+        if(pFast == pSlow)//该判断
+            return true;
+    }
+    return false;
 }
 
 LLNode * CreateNode(int Data)//* 创建一个节点
