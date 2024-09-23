@@ -1,28 +1,70 @@
 {
-    "tasks": [
+    "tasks": 
+    [
         {
             "type": "cppbuild",
             "label": "C/C++: gcc.exe 生成活动文件",
-            "command": "D:\\mingw\\bin\\gcc.exe",
-            "args": [
+            "command": "D:/A_Tool/VSCode/mingw-19.0/MinGW/bin/gcc.exe",
+            "args": 
+            [
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                //"同级文件名.cpp",猜测同级文件可以直接写在这里
+                // "-IMulti_Func",//子级文件需要加这个
+                // "Multi_Func/Func.c",
                 "-o",
+                //指定输出的可执行文件名字
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                //"${workspaceFolder}/Multi.exe",
             ],
-            "options": {
+            "options": 
+            {
                 "cwd": "${fileDirname}"
             },
-            "problemMatcher": [
+            "problemMatcher": 
+            [
                 "$gcc"
             ],
-            "group": {
+            "group": 
+            {
                 "kind": "build",
                 "isDefault": true
             },
             "detail": "调试器生成的任务。"
-        }
+        },
+        //以下是通过右上角菜单使用 cmake 调试程序需要的task.json 配置，（但是尝试后没有相应输出，只能使用下方cmake 工具栏点击调试）
+        //相当于执行cmake ..
+        // {
+        //     "type":"shell",
+        //     "label": "cmake",
+        //     "command":"cmake",
+        //     "args": 
+        //     [
+        //       "../"
+        //     ],
+        // },
+        // //相当于执行mingw32-make.exe
+        // {
+        //     "label": "make",
+        //     "command":"mingw32-make.exe",
+        //     "args": 
+        //     [
+  
+        //     ],
+        // },
+        // {
+        //     "label": "build",
+        //     "dependsOn":
+        //     [
+        //         "cmake",
+        //         "make"
+        //     ]
+        // },
     ],
-    "version": "2.0.0"
+    "version": "2.0.0",
+    // "options": 
+    // {
+    //   "cwd": "${fileDirname}/build"
+    // }
 }
