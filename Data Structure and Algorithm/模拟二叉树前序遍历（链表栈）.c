@@ -2,9 +2,11 @@
 #include <malloc.h>
 
 //! 二叉树结构：根节点、叶子节点、兄弟节点、前驱节点、后驱节点、左子树、右子树
-//! 前序遍历、中序遍历、后序遍历：根左右、左根右、左右根
+//* 前序遍历、中序遍历、后序遍历：根左右、左根右、左右根
 
-//! 栈的最大节点个数取决于二叉树的深度，假设树的深度为4，则栈在入栈出栈过程中的节点数量最大也为4个
+//* 栈的最大节点个数取决于二叉树的深度，假设树的深度为4，则栈在入栈出栈过程中的节点数量最大也为4个
+
+//! 前序遍历的关键是节点入栈立马打印
 
 //* 二叉树节点定义
 typedef struct TNode
@@ -64,7 +66,7 @@ TreeNode * Pop(void)
     return pTree;
 }
 
-//* 利用递归遍历二叉树时类似栈的入栈出栈过程，一旦开始执行某节点函数的第一句，该节点就算入栈，执行了最后一句（遍历右子树）该节点就出栈
+//* 使用递归实现前序遍历
 void Look_1(TreeNode * pRoot) 
 {
     if(pRoot != NULL)
@@ -82,7 +84,7 @@ void Look_2(TreeNode * pRoot)
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
-    while(pCurrent != NULL || pStackTop != &Head)//退出条件：树没有了，栈也没有了
+    while(1)//退出条件：树没有了，栈也没有了
     {
         //遍历左子树，一直到叶子节点
         while(pCurrent != NULL)
@@ -91,9 +93,9 @@ void Look_2(TreeNode * pRoot)
             Push(pCurrent);
             pCurrent = pCurrent->pLeft;
         }
-
-        // if(pStackTop == &Head)//此时pCurrent 一定是NULL，只需要判断栈顶是否为空头即可
-        //     break;
+        //! 判断退出条件写在这里，目的是预防接下来可能使用空指针导致报错
+        if(pStackTop == &Head)//此时pCurrent 一定是NULL，只需要判断栈顶是否为空头即可
+            break;
 
         //取出栈顶节点，转到右节点(然后循环回到开始，遍历右节点的左子树)
         TreeNode * pTemp = Pop();
