@@ -6,9 +6,7 @@
 
 //! 栈的最大节点个数取决于二叉树的深度，假设树的深度为4，则栈在入栈出栈过程中的节点数量最大也为4个
 
-//! 后序遍历的关键是节点出栈后立马打印
-//* 判断Pop()返回的节点（上一个栈顶节点）是不是当前栈顶节点的右节点，如果是，说明右节点已经遍历过，接下来该使栈顶节点出栈，打印栈顶节点
-//* 如果上一个栈顶节点是当前栈顶节点的左节点，则说明刚刚遍历完左节点，接下来该入栈并打印右节点
+//! 前序遍历的关键是节点入栈立马打印
 
 //* 二叉树节点定义
 typedef struct TNode
@@ -45,15 +43,17 @@ TreeNode * Pop(void)
     return Stack[Temp];
 }
 
-//* 使用递归实现后序遍历
+//* 使用递归实现前序遍历(根右左)
 void Look_1(TreeNode * pRoot) 
 {
     if(pRoot != NULL)
     {
         //这三行代码的不同位置可以实现三种遍历方式
-        Look_1(pRoot->pLeft);
-        Look_1(pRoot->pRight);
         printf("%d ", pRoot->Data);
+        //push(pRoot);
+        //* 使用一个容量10的栈按顺序装着每次要打印的节点，函数结束后，使用循环打印这个栈即可完成某种顺序的正序/倒序遍历
+        Look_1(pRoot->pRight);
+        Look_1(pRoot->pLeft);
     }
 }
 
@@ -63,31 +63,22 @@ void Look_2(TreeNode * pRoot)
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
-    TreeNode * pPre = NULL;
     while(1)//退出条件：树没有了，栈也没有了
     {
-        //遍历左子树，一直到叶子节点
+        //遍历右子树，一直到叶子节点
         while(pCurrent != NULL)
         {
+            printf("%d ", pCurrent->Data);
             Push(pCurrent);
-            pCurrent = pCurrent->pLeft;
+            pCurrent = pCurrent->pRight;
         }
         //! 判断退出条件写在这里，目的是预防接下来可能使用空指针导致报错
         if(StackTop == -1)//此时pCurrent 一定是NULL，只需要判断栈顶是否为空头即可
             break;
-        //* 经过前面的一直遍历左子树，此时栈顶已经是最左节点，没有左子树了
-        //* 后序遍历是左右根，左已经为空，无需遍历，需要再判断栈顶节点的右子树是否为空
-        //* 如果右子树为空，无需遍历，那就轮到根节点，此时栈顶节点出栈并打印
-        //* 如果右子树不为空，那就要判断右节点是否已经出栈打印过，没打印过才能让右节点入栈
-        //* pPre 用于接收每次出栈的节点，作用是判断该节点是栈顶节点的左节点还是右节点
 
-        if(Stack[StackTop]->pRight == NULL || Stack[StackTop]->pRight == pPre)
-        {
-            pPre = Pop();
-            printf("%d ", pPre->Data); 
-        }
-        else
-            pCurrent = Stack[StackTop]->pRight;
+        //取出栈顶节点，转到右节点(然后循环回到开始，遍历右节点的左子树)
+        TreeNode * pTemp = Pop();
+        pCurrent = pTemp->pLeft;
     }
     printf("\n");
 }
