@@ -40,7 +40,8 @@ void Push(TreeNode * Node)//尾添加
     pQueueEnd = pNew;
 }
 
-TreeNode * Pop(void)//头删除
+//头删除
+TreeNode * Pop(void)//* 一定要考虑删除的是尾节点的情况，此时尾指针需要指向空头
 {
     //队中无元素，无需出队
     if(pQueueEnd == &QueueHead)
