@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <malloc.h>
 
-//! ¶ş²æÊ÷½á¹¹£º¸ù½Úµã¡¢Ò¶×Ó½Úµã¡¢ĞÖµÜ½Úµã¡¢Ç°Çı½Úµã¡¢ºóÇı½Úµã¡¢×ó×ÓÊ÷¡¢ÓÒ×ÓÊ÷
-//! Ç°Ğò±éÀú¡¢ÖĞĞò±éÀú¡¢ºóĞò±éÀú£º¸ù×óÓÒ¡¢×ó¸ùÓÒ¡¢×óÓÒ¸ù
+//! äºŒå‰æ ‘ç»“æ„ï¼šæ ¹èŠ‚ç‚¹ã€å¶å­èŠ‚ç‚¹ã€å…„å¼ŸèŠ‚ç‚¹ã€å‰é©±èŠ‚ç‚¹ã€åé©±èŠ‚ç‚¹ã€å·¦å­æ ‘ã€å³å­æ ‘
+//! å‰åºéå†ã€ä¸­åºéå†ã€ååºéå†ï¼šæ ¹å·¦å³ã€å·¦æ ¹å³ã€å·¦å³æ ¹
 
 
 typedef struct Node
@@ -13,7 +13,7 @@ typedef struct Node
     struct Node * pRight;
 }TreeNode;
 
-TreeNode * CreateTreeNode(int Data);//* ´´½¨Ò»¸ö¶ş²æÊ÷½Úµã
+TreeNode * CreateTreeNode(int Data);//* åˆ›å»ºä¸€ä¸ªäºŒå‰æ ‘èŠ‚ç‚¹
 
  
 int main(void)
@@ -22,17 +22,17 @@ int main(void)
     return 0;
 }
 
-TreeNode * CreateTreeNode(int Data)//* ´´½¨Ò»¸ö¶ş²æÊ÷½Úµã
+TreeNode * CreateTreeNode(int Data)//* åˆ›å»ºä¸€ä¸ªäºŒå‰æ ‘èŠ‚ç‚¹
 {
-    //ÉêÇë½Úµã¿Õ¼ä
+    //ç”³è¯·èŠ‚ç‚¹ç©ºé—´
     TreeNode * pNewNode = (TreeNode *)malloc(sizeof(TreeNode));
     if(pNewNode == NULL)
         return NULL;
-    //½Úµã³ÉÔ±ÃÇ¸³Öµ
+    //èŠ‚ç‚¹æˆå‘˜ä»¬èµ‹å€¼
     pNewNode->Data = Data;
     pNewNode->pFather = NULL;
     pNewNode->pLeft = NULL;
     pNewNode->pRight = NULL;
-    //·µ»Ø½ÚµãµØÖ·
+    //è¿”å›èŠ‚ç‚¹åœ°å€
     return pNewNode;
 }

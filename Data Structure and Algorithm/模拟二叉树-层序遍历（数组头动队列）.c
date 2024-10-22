@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <malloc.h>
 
-//* ͷ�����е�Ŀ����ȥ������ʱ��������Ǩ�ƵĹ���
-//* ͷ��/β��ָ���ǳ���ʱ˭�ڶ�
+//* 头动队列的目的是去掉出队时整体数据迁移的过程
+//* 头动/尾动指的是出队时谁在动
 
-//! ��β�ڽڵ����ʱ�����ƣ����ڵ����ʱλ�ò�����ͷ��������������� N ���ڵ㣬��β�ͻ������� N λ����˶��������Ԫ�ظ���ҲΪ N ��
-//! β������ֻ��Ҫ�ɽڵ�������Ĳ����Ԫ�ظ�����������ʱ��Ҫ����ǰ�ƣ�����ʱ�任�ռ�
-//! ������ʾ��ͷ�������ÿռ任ʱ�䣬�����Ԫ�ظ��������̵�ִ��ʱ��
+//! 队尾在节点入队时往后移，但节点出队时位置不动（头动），所以如果有 N 个节点，队尾就会往后移 N 位，因此队列数组的元素个数也为 N 个
+//! 尾动队列只需要由节点个数最多的层决定元素个数，但出队时需要整体前移，其用时间换空间
+//! 本节演示的头动队列用空间换时间，更多的元素个数，更短的执行时间
 
 typedef struct Node
 {
@@ -16,36 +16,36 @@ typedef struct Node
     struct Node * pRight;
 }TreeNode;
 
-//* ���ƶ���
-#define Queue_Size 10 //* ����ÿ��Ľڵ�������������Ĳ�Ľڵ������Ϊ����������������ӹ��������ɵ����ڵ�����
+//* 非移动型
+#define Queue_Size 10 //* 计算每层的节点个数，个数最多的层的节点个数即为队列在整个出队入队过程中容纳的最多节点数量
 TreeNode * Queue[Queue_Size];
 int QueueHead = 0; 
 int QueueEnd = -1;
 
 void Push(TreeNode * Node)
 {
-    //����Ԫ�ؼ�һ
+    //队列元素加一
     QueueEnd ++;
-    //�ڶ�β����Ԫ��
+    //在队尾加入元素
     Queue[QueueEnd] = Node;
 }
 
 TreeNode * Pop(void)
 {
-    //������Ԫ�أ��������
+    //队中无元素，无需出队
     if(QueueEnd < QueueHead)
         return NULL;
-    //��¼��ͷ���������ӣ�
+    //记录队头（即将出队）
     TreeNode * pTemp = Queue[QueueHead];
-    //��ͷ������һλ��������ԭ���Ķ�ͷ
+    //队头往后移一位，舍弃了原来的队头
     QueueHead ++;
-    //����ԭ���Ķ�ͷ
+    //返回原来的队头
     return pTemp;
 }
 
 void Look(TreeNode * pRoot)
 {
-    //��ֹ�ն�����
+    //防止空二叉树
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
@@ -58,7 +58,7 @@ void Look(TreeNode * pRoot)
             Push(pCurrent->pLeft);
         if(pCurrent->pRight !=  NULL)
             Push(pCurrent->pRight);
-        //* ����ʱ��������һ��ڵ���ӣ�����ֻ����һ��û�нڵ㼴����Ϊ���һ��ʱ������ڵ�ȫ�����Ӻ���п��ˣ���ʱ�����������������
+        //* 出队时伴随着下一层节点入队，所以只有下一层没有节点即本层为最后一层时，本层节点全部出队后队列空了，此时二叉树层序遍历结束
         if(QueueEnd < QueueHead)
             return;
     }

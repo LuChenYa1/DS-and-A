@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <malloc.h>
 
-//! �������ṹ�����ڵ㡢Ҷ�ӽڵ㡢�ֵܽڵ㡢ǰ���ڵ㡢�����ڵ㡢��������������
-//* ǰ������������������������������ҡ�����ҡ����Ҹ�
+//! 二叉树结构：根节点、叶子节点、兄弟节点、前驱节点、后驱节点、左子树、右子树
+//* 前序遍历、中序遍历、后序遍历：根左右、左根右、左右根
 
-//* ջ�����ڵ����ȡ���ڶ���������ȣ������������Ϊ4����ջ����ջ��ջ�����еĽڵ��������ҲΪ4��
+//* 栈的最大节点个数取决于二叉树的深度，假设树的深度为4，则栈在入栈出栈过程中的节点数量最大也为4个
 
-//! ǰ������Ĺؼ��ǽڵ���ջ������ӡ
+//! 前序遍历的关键是节点入栈立马打印
 
-//* �������ڵ㶨��
+//* 二叉树节点定义
 typedef struct TNode
 {
     int Data;
@@ -17,93 +17,93 @@ typedef struct TNode
     struct TNode * pRight;
 }TreeNode;
 
-//* ����ջ�ڵ㶨��
+//* 链表栈节点定义
 typedef struct SNode
 {
-    TreeNode * pTree;//װ�Ŷ������ڵ�
+    TreeNode * pTree;//装着二叉树节点
     struct SNode * pNext;
     struct SNode * pPre;
 }StackNode;
 
-//* ����ջ�Ŀ�ͷ
+//* 链表栈的空头
 StackNode Head;
-//* ����ջ��ջ��ָ�루βָ�룩
-StackNode * pStackTop = &Head;//��ʼû�����ݣ�ָ���ͷ
+//* 链表栈的栈顶指针（尾指针）
+StackNode * pStackTop = &Head;//初始没有数据，指向空头
 
-//* �������ڵ�������ջ��β���ӣ�
+//* 二叉树节点入链表栈（尾添加）
 void Push(TreeNode * pTree)
 {
-    //�����Ϸ��Լ��
+    //参数合法性检测
     if(pTree == NULL)
         return;
-    //����ջ�ڵ�
+    //申请栈节点
     StackNode * pNewStack = (StackNode *)malloc(sizeof(StackNode));
     if(pNewStack == NULL)
         return;
-    //ջ�ڵ��Ա��ֵ
+    //栈节点成员赋值
     pNewStack->pTree = pTree;
     pNewStack->pPre = NULL;
     pNewStack->pNext = NULL;
-    //����
+    //链接
     pStackTop->pNext = pNewStack;
     pNewStack->pPre = pStackTop;
     pStackTop = pNewStack;
 }
 
-//* �������ڵ������ջ��βɾ����
+//* 二叉树节点出链表栈（尾删除）
 TreeNode * Pop(void)
 {
-    //ջΪ��
+    //栈为空
     if(pStackTop == &Head)
         return NULL;
-    //��¼Ҫɾ����ջ���ڵ�
+    //记录要删除的栈顶节点
     TreeNode * pTree = pStackTop->pTree;
-    //�ͷ�ջ���ڵ㡢�޸�ջ��ָ��
+    //释放栈顶节点、修改栈顶指针
     pStackTop = pStackTop->pPre;
     free(pStackTop->pNext);
     pStackTop->pNext = NULL;
-    //����ɾ���Ķ������ڵ�
+    //返回删除的二叉树节点
     return pTree;
 }
 
-//* ʹ�õݹ�ʵ��ǰ�����
+//* 使用递归实现前序遍历
 void Look_1(TreeNode * pRoot) 
 {
     if(pRoot != NULL)
     {
-        //�����д���Ĳ�ͬλ�ÿ���ʵ�����ֱ�����ʽ
+        //这三行代码的不同位置可以实现三种遍历方式
         printf("%d ", pRoot->Data);
         Look_1(pRoot->pLeft);
         Look_1(pRoot->pRight);
     }
 }
 
-//* ��������ջ����������
+//* 利用链表栈遍历二叉树
 void Look_2(TreeNode * pRoot)
 {
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
-    while(1)//�˳���������û���ˣ�ջҲû����
+    while(1)//退出条件：树没有了，栈也没有了
     {
-        //������������һֱ��Ҷ�ӽڵ�
+        //遍历左子树，一直到叶子节点
         while(pCurrent != NULL)
         {
             printf("%d ", pCurrent->Data);
             Push(pCurrent);
             pCurrent = pCurrent->pLeft;
         }
-        //! �ж��˳�����д�����Ŀ����Ԥ������������ʹ�ÿ�ָ�뵼�±���
-        if(pStackTop == &Head)//��ʱpCurrent һ����NULL��ֻ��Ҫ�ж�ջ���Ƿ�Ϊ��ͷ����
+        //! 判断退出条件写在这里，目的是预防接下来可能使用空指针导致报错
+        if(pStackTop == &Head)//此时pCurrent 一定是NULL，只需要判断栈顶是否为空头即可
             break;
 
-        //ȡ��ջ���ڵ㣬ת���ҽڵ�(Ȼ��ѭ���ص���ʼ�������ҽڵ��������)
+        //取出栈顶节点，转到右节点(然后循环回到开始，遍历右节点的左子树)
         TreeNode * pTemp = Pop();
         pCurrent = pTemp->pRight;
 
-        //�ж��Ƿ����ȫ��
-        //pStackTop == &Head���Ѿ����������ڵ�����ұߣ��������ϵĽڵ㶼�Ѿ���ջ�Ҵ�ӡ��
-        //pCurrent == NULL��pTemp ��Ҷ�ӽڵ�
+        //判断是否遍历全部
+        //pStackTop == &Head：已经遍历到根节点的最右边，往左往上的节点都已经出栈且打印了
+        //pCurrent == NULL：pTemp 是叶子节点
     }
     printf("\n");
 }

@@ -12,25 +12,25 @@ typedef struct TNode
 
 int Max_Number;
 
-//* Êı×éÕ»
+//* æ•°ç»„æ ˆ
 #define Deep 5
 TreeNode * Stack[Deep];
-int StackTop = -1;//³õÊ¼Ã»ÓĞÊı¾İ£¬Õ»¶¥ÏÂ±êÖ¸Ïò-1
+int StackTop = -1;//åˆå§‹æ²¡æœ‰æ•°æ®ï¼Œæ ˆé¡¶ä¸‹æ ‡æŒ‡å‘-1
 
-//* ¶ş²æÊ÷½ÚµãÈëÊı×éÕ»£¨Î²Ìí¼Ó£©
+//* äºŒå‰æ ‘èŠ‚ç‚¹å…¥æ•°ç»„æ ˆï¼ˆå°¾æ·»åŠ ï¼‰
 void Push(TreeNode * pTree)
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(pTree == NULL)
         return;
     StackTop ++;
     Stack[StackTop] = pTree;
 }
 
-//* ¶ş²æÊ÷½Úµã³öÊı×éÕ»£¨Î²É¾³ı£©
+//* äºŒå‰æ ‘èŠ‚ç‚¹å‡ºæ•°ç»„æ ˆï¼ˆå°¾åˆ é™¤ï¼‰
 TreeNode * Pop(void)
 {
-    //Õ»Îª¿Õ
+    //æ ˆä¸ºç©º
     if(StackTop == -1)
         return NULL;
     int Temp = StackTop;
@@ -40,7 +40,7 @@ TreeNode * Pop(void)
 
 void GetLayers(TreeNode * pLeaf)
 {
-    //* Èç¹ûµ±Ç°±éÀúµÄ½ÚµãÊÇÒ¶×Ó½Úµã£¬Ôò¿ªÊ¼Ïò¸ù½Úµã·´ÍÆ£¬ÀÛ¼Ó²ãÊı
+    //* å¦‚æœå½“å‰éå†çš„èŠ‚ç‚¹æ˜¯å¶å­èŠ‚ç‚¹ï¼Œåˆ™å¼€å§‹å‘æ ¹èŠ‚ç‚¹åæ¨ï¼Œç´¯åŠ å±‚æ•°
     if(pLeaf->pLeft == NULL && pLeaf->pRight == NULL)
     {
         int Branch_Number = 0;
@@ -55,37 +55,37 @@ void GetLayers(TreeNode * pLeaf)
     }
 }
 
-//* µİ¹éÊµÏÖ
+//* é€’å½’å®ç°
 void Look_1(TreeNode * pRoot)
 {   
     if(pRoot == NULL)
         return;
-    //* ¼ÆËãµ±Ç°Ò¶×Ó½ÚµãµÄ²ãÊı£¨Èç¹ûÊÇÒ¶×Ó½Úµã£©
+    //* è®¡ç®—å½“å‰å¶å­èŠ‚ç‚¹çš„å±‚æ•°ï¼ˆå¦‚æœæ˜¯å¶å­èŠ‚ç‚¹ï¼‰
     GetLayers(pRoot);
     Look_1(pRoot->pLeft);
     Look_1(pRoot->pRight);
 }
 
-//* ·Çµİ¹éÊµÏÖ
+//* éé€’å½’å®ç°
 void Look_2(TreeNode * pRoot)
 {   
     if(pRoot == NULL)
         return;
     while(1)
     {
-        while(pRoot)//* ×ó×ÓÊ÷ÈëÕ»
+        while(pRoot)//* å·¦å­æ ‘å…¥æ ˆ
         {
             Push(pRoot);
             pRoot = pRoot->pLeft;
         }
-        //* ±éÀúµ½×îºóÒ»¸ö½Úµã
+        //* éå†åˆ°æœ€åä¸€ä¸ªèŠ‚ç‚¹
         if(StackTop == -1)
             break;
-        //* È¡³ö×î½üÈëÕ»µÄ½Úµã
+        //* å–å‡ºæœ€è¿‘å…¥æ ˆçš„èŠ‚ç‚¹
         pRoot =  Pop();
-        //* ¼ÆËãµ±Ç°Ò¶×Ó½ÚµãµÄ²ãÊı£¨Èç¹ûÊÇÒ¶×Ó½Úµã£©
+        //* è®¡ç®—å½“å‰å¶å­èŠ‚ç‚¹çš„å±‚æ•°ï¼ˆå¦‚æœæ˜¯å¶å­èŠ‚ç‚¹ï¼‰
         GetLayers(pRoot);
-        //* ×ªµ½ÓÒ×ÓÊ÷
+        //* è½¬åˆ°å³å­æ ‘
         pRoot = pRoot->pRight;
     }
 }
@@ -124,16 +124,16 @@ int main(void)
 
     t7.pFather = &t5;
     t8.pFather = &t5;
-    //* ´Ë´¦ÓĞĞŞ¸Ä£¬²ãÊı±äÎª5
+    //* æ­¤å¤„æœ‰ä¿®æ”¹ï¼Œå±‚æ•°å˜ä¸º5
     t9.pFather = &t6;
     t9.pRight = &t10;
 
     t10.pFather = &t9;
 
     Look_1(&t1);
-    printf("µİ¹é·¨¼ÆËã¶ş²æÊ÷µÄ¸ß¶ÈÎª %d \n", Max_Number);
+    printf("é€’å½’æ³•è®¡ç®—äºŒå‰æ ‘çš„é«˜åº¦ä¸º %d \n", Max_Number);
     Look_2(&t1);
-    printf("·Çµİ¹é·¨¼ÆËã¶ş²æÊ÷µÄ¸ß¶ÈÎª %d \n", Max_Number);
+    printf("éé€’å½’æ³•è®¡ç®—äºŒå‰æ ‘çš„é«˜åº¦ä¸º %d \n", Max_Number);
 
     return 0;
 } 

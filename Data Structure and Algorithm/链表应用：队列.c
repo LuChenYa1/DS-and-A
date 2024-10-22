@@ -3,10 +3,10 @@
 #include <malloc.h>
 #include <stdbool.h>
 
-//! ¶ÓÁÐ£ºÏÈ½øÏÈ³ö£¬ºó½øºó³ö
-//! ÈÃ¶àÐÅÏ¢Ô´À´µÄÐÅÏ¢ÄÜ±»ÓÐÐò´¦Àí£¬eg.WindowsµÄÏûÏ¢´¦Àí»úÖÆ 
+//! é˜Ÿåˆ—ï¼šå…ˆè¿›å…ˆå‡ºï¼ŒåŽè¿›åŽå‡º
+//! è®©å¤šä¿¡æ¯æºæ¥çš„ä¿¡æ¯èƒ½è¢«æœ‰åºå¤„ç†ï¼Œeg.Windowsçš„æ¶ˆæ¯å¤„ç†æœºåˆ¶ 
 
-//! Ìí¼ÓµÄÒ»¶Ë½Ð¶ÓÎ²£¬³öÊý¾ÝµÄÒ»¶Ë½Ð¶ÓÍ·£¬Ìí¼Ó½ÐÈë¶Ó£¬³öÊý¾Ý½Ð³ö¶Ó
+//! æ·»åŠ çš„ä¸€ç«¯å«é˜Ÿå°¾ï¼Œå‡ºæ•°æ®çš„ä¸€ç«¯å«é˜Ÿå¤´ï¼Œæ·»åŠ å«å…¥é˜Ÿï¼Œå‡ºæ•°æ®å«å‡ºé˜Ÿ
 
 typedef struct Node
 {
@@ -15,19 +15,19 @@ typedef struct Node
     struct Node * pNext;
 }LLNode;
 
-//* ¶ÓÁÐ£ºÉêÇëÒ»¸öÕ»¿ÕÍ·
+//* é˜Ÿåˆ—ï¼šç”³è¯·ä¸€ä¸ªæ ˆç©ºå¤´
 LLNode * Queue(void);
-//* ÅÐ¶Ï¶ÓÁÐÊÇ·ñÎª¿Õ
+//* åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
 bool isEmpty(LLNode * pQueue);
-//* Èë¶Ó£ºÌí¼Ó½Úµã(Í·Ìí¼Ó)
+//* å…¥é˜Ÿï¼šæ·»åŠ èŠ‚ç‚¹(å¤´æ·»åŠ )
 void Push(LLNode * pQueue, int Data);
-//* ³ö¶Ó£ºÉ¾³ý½Úµã£¨Î²É¾³ý£©
+//* å‡ºé˜Ÿï¼šåˆ é™¤èŠ‚ç‚¹ï¼ˆå°¾åˆ é™¤ï¼‰
 void Pop(LLNode * pQueue);
-//* »ñÈ¡¶ÓÍ·
+//* èŽ·å–é˜Ÿå¤´
 LLNode * Front(LLNode * pQueue);
-//* »ñÈ¡¶ÓÎ²
+//* èŽ·å–é˜Ÿå°¾
 LLNode * Back(LLNode * pQueue);
-//* ÊÍ·ÅÕ»
+//* é‡Šæ”¾æ ˆ
 void FreeQueue(LLNode ** Queue);
 
 int main(void)
@@ -52,15 +52,15 @@ int main(void)
 
 LLNode * Queue(void)
 {
-    //ÉêÇë½Úµã
+    //ç”³è¯·èŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode == NULL)
         return NULL;
-    //½Úµã³ÉÔ±¸³Öµ
+    //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
     pNewNode->Data = -1;
     pNewNode->pPre = pNewNode;
     pNewNode->pNext = pNewNode;
-    //·µ»Ø½Úµã
+    //è¿”å›žèŠ‚ç‚¹
     return pNewNode;
 }
 
@@ -87,22 +87,22 @@ LLNode * Back(LLNode * pQueue)
 
 void Push(LLNode * pQueue, int Data)
 {
-    //²ÎÊý¼ì²â
+    //å‚æ•°æ£€æµ‹
     if(pQueue == NULL)
         return;
-    //ÉêÇë½Úµã
+    //ç”³è¯·èŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode == NULL)
         return;
-    //½Úµã³ÉÔ±¸³Öµ
+    //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
     pNewNode->Data = Data;
     pNewNode->pPre = NULL;
     pNewNode->pNext = NULL;
-    //Á´½Ó
-    //ÏÈÁ¬
+    //é“¾æŽ¥
+    //å…ˆè¿ž
     pNewNode->pPre = pQueue;
     pNewNode->pNext = pQueue->pNext;
-    //ºó¶Ï
+    //åŽæ–­
     pQueue->pNext->pPre = pNewNode;
     pQueue->pNext = pNewNode;
 }
@@ -111,21 +111,21 @@ void Pop(LLNode * pQueue)
 {
     if(isEmpty(pQueue))
         return;
-    //ÖØÐÂÁ´½Ó
+    //é‡æ–°é“¾æŽ¥
     LLNode * pEnd = pQueue->pPre;
     pEnd->pPre->pNext = pQueue;
     pQueue->pPre = pEnd->pPre;
-    //ÊÍ·ÅÎ²½Úµã
+    //é‡Šæ”¾å°¾èŠ‚ç‚¹
     free(pEnd);
 }
 
 void FreeQueue(LLNode ** pQueue)
 {
-    //²ÎÊýºÏ·¨ÐÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(pQueue == NULL || *pQueue == NULL)
         return;
     LLNode * pCurrent = *pQueue;
-    do//! Ãî°¡£¬ÎÒÔõÃ´Ã»Ïëµ½¿ÉÒÔÏÈÖ´ÐÐÔÙÅÐ¶Ï
+    do//! å¦™å•Šï¼Œæˆ‘æ€Žä¹ˆæ²¡æƒ³åˆ°å¯ä»¥å…ˆæ‰§è¡Œå†åˆ¤æ–­
     {
         LLNode * pTemp = pCurrent;
         pCurrent = pCurrent->pNext;

@@ -3,13 +3,13 @@
 #include <malloc.h>
 #include <stdbool.h>
 
-//! Õ»ÊÇ²Ù×÷·½·¨£¬ÒªÇóÏÈ½øºó³ö£¬ºó½øÏÈ³ö£¬ÓÃ¶¯Ì¬Êý×é»òÕßÁ´±íÄÄÖÖÊý¾Ý½á¹¹ÊµÏÖ¶¼¿ÉÒÔ
-//! Ö»Òª±£Ö¤²åÈëºÍÉ¾³ý¶¼ÔÚÍ¬Ò»¶Ë½øÐÐ£¬¾ÍÊÇÕ»
+//! æ ˆæ˜¯æ“ä½œæ–¹æ³•ï¼Œè¦æ±‚å…ˆè¿›åŽå‡ºï¼ŒåŽè¿›å…ˆå‡ºï¼Œç”¨åŠ¨æ€æ•°ç»„æˆ–è€…é“¾è¡¨å“ªç§æ•°æ®ç»“æž„å®žçŽ°éƒ½å¯ä»¥
+//! åªè¦ä¿è¯æ’å…¥å’Œåˆ é™¤éƒ½åœ¨åŒä¸€ç«¯è¿›è¡Œï¼Œå°±æ˜¯æ ˆ
 
-//! Á´±íµÄÕ»ÊÇÀ´Ò»¸öÉêÇëÒ»¸ö£¬Ã»ÓÐ¿Õ¼äÀË·Ñ£¬ÇÒÔöÉ¾¼òµ¥£¬µ«Ë÷ÒýÄ³¸ö½ÚµãºÜÂý£¬ÓÃÊ±¼ä»»¿Õ¼ä
-//! Êý×éµÄÕ»ÊÇ¹Ì¶¨ÊýÁ¿£¬ÓÐ¿Õ¼äÀË·Ñ£¬¶ÔÖÐ¼äÔªËØÔöÉ¾Ê±ºÜÂé·³£¬µ«Ë÷ÒýÄ³ÔªËØºÜ¿ì£¬ÓÃ¿Õ¼ä»»Ê±¼ä
+//! é“¾è¡¨çš„æ ˆæ˜¯æ¥ä¸€ä¸ªç”³è¯·ä¸€ä¸ªï¼Œæ²¡æœ‰ç©ºé—´æµªè´¹ï¼Œä¸”å¢žåˆ ç®€å•ï¼Œä½†ç´¢å¼•æŸä¸ªèŠ‚ç‚¹å¾ˆæ…¢ï¼Œç”¨æ—¶é—´æ¢ç©ºé—´
+//! æ•°ç»„çš„æ ˆæ˜¯å›ºå®šæ•°é‡ï¼Œæœ‰ç©ºé—´æµªè´¹ï¼Œå¯¹ä¸­é—´å…ƒç´ å¢žåˆ æ—¶å¾ˆéº»çƒ¦ï¼Œä½†ç´¢å¼•æŸå…ƒç´ å¾ˆå¿«ï¼Œç”¨ç©ºé—´æ¢æ—¶é—´
 
-//! Õ»½á¹¹Ã»ÓÐ¹Ì¶¨ÐÎÊ½£¬°´ÐèÇó¿ÉÒÔÑ¡Ôñ¶¯Ì¬ÊýÁ¿µÄÊý×é£¬Ò²¿ÉÒÔÑ¡ÔñÒ»´ÎÉêÇë¹Ì¶¨ÊýÁ¿µÄÁ´±í½Úµã
+//! æ ˆç»“æž„æ²¡æœ‰å›ºå®šå½¢å¼ï¼ŒæŒ‰éœ€æ±‚å¯ä»¥é€‰æ‹©åŠ¨æ€æ•°é‡çš„æ•°ç»„ï¼Œä¹Ÿå¯ä»¥é€‰æ‹©ä¸€æ¬¡ç”³è¯·å›ºå®šæ•°é‡çš„é“¾è¡¨èŠ‚ç‚¹
 
 typedef struct Node
 {
@@ -18,17 +18,17 @@ typedef struct Node
     struct Node * pNext;
 }LLNode;
 
-//* Õ»£ºÉêÇëÒ»¸öÕ»¿ÕÍ·
+//* æ ˆï¼šç”³è¯·ä¸€ä¸ªæ ˆç©ºå¤´
 LLNode * Stack(void);
-//* ÅÐ¶ÏÕ»ÊÇ·ñÎª¿Õ
+//* åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
 bool isEmpty(LLNode * pStack);
-//* Ñ¹Õ»£ºÌí¼Ó½Úµã(Î²Ìí¼Ó)
+//* åŽ‹æ ˆï¼šæ·»åŠ èŠ‚ç‚¹(å°¾æ·»åŠ )
 void Push(LLNode * pStack, int Data);
-//* »ñÈ¡Õ»¶¥½Úµã
+//* èŽ·å–æ ˆé¡¶èŠ‚ç‚¹
 LLNode * Top(LLNode * pStack);
-//* É¾³ýÕ»¶¥½Úµã(Î²½Úµã)
+//* åˆ é™¤æ ˆé¡¶èŠ‚ç‚¹(å°¾èŠ‚ç‚¹)
 void Pop(LLNode * pStack);
-//* ÊÍ·ÅÕ»
+//* é‡Šæ”¾æ ˆ
 void FreeStack(LLNode ** stack);
 
 int main(void)
@@ -52,15 +52,15 @@ int main(void)
 
 LLNode * Stack(void)
 {
-    //ÉêÇë½Úµã
+    //ç”³è¯·èŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode == NULL)
         return NULL;
-    //½Úµã³ÉÔ±¸³Öµ
+    //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
     pNewNode->Data = -1;
     pNewNode->pPre = pNewNode;
     pNewNode->pNext = pNewNode;
-    //·µ»Ø½Úµã
+    //è¿”å›žèŠ‚ç‚¹
     return pNewNode;
 }
 
@@ -73,22 +73,22 @@ bool isEmpty(LLNode * pStack)
 
 void Push(LLNode * pStack, int Data)
 {
-    //²ÎÊý¼ì²â
+    //å‚æ•°æ£€æµ‹
     if(pStack == NULL)
         return;
-    //ÉêÇë½Úµã
+    //ç”³è¯·èŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode == NULL)
         return;
-    //½Úµã³ÉÔ±¸³Öµ
+    //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
     pNewNode->Data = Data;
     pNewNode->pPre = NULL;
     pNewNode->pNext = NULL;
-    //Á´½Ó
-    //ÏÈÁ¬
+    //é“¾æŽ¥
+    //å…ˆè¿ž
     pNewNode->pPre = pStack->pPre;
     pNewNode->pNext = pStack;
-    //ºó¶Ï
+    //åŽæ–­
     pStack->pPre->pNext = pNewNode;
     pStack->pPre = pNewNode;
 }
@@ -104,21 +104,21 @@ void Pop(LLNode * pStack)
 {
     if(isEmpty(pStack))
         return;
-    //ÖØÐÂÁ´½Ó
+    //é‡æ–°é“¾æŽ¥
     LLNode * pEnd = pStack->pPre;
     pEnd->pPre->pNext = pStack;
     pStack->pPre = pEnd->pPre;
-    //ÊÍ·ÅÎ²½Úµã
+    //é‡Šæ”¾å°¾èŠ‚ç‚¹
     free(pEnd);
 }
 
 void FreeStack(LLNode ** pStack)
 {
-    //²ÎÊýºÏ·¨ÐÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(pStack == NULL || *pStack == NULL)
         return;
     LLNode * pCurrent = *pStack;
-    do//! Ãî°¡£¬ÎÒÔõÃ´Ã»Ïëµ½¿ÉÒÔÏÈÖ´ÐÐÔÙÅÐ¶Ï
+    do//! å¦™å•Šï¼Œæˆ‘æ€Žä¹ˆæ²¡æƒ³åˆ°å¯ä»¥å…ˆæ‰§è¡Œå†åˆ¤æ–­
     {
         LLNode * pTemp = pCurrent;
         pCurrent = pCurrent->pNext;

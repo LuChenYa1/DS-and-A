@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <malloc.h>
 
-//* ԭ��������������ö���ʵ�֣��ڵ���ӣ�����ӡ��ʱ�����������ҽڵ���ӣ�������ң�
-//* ʵ�֣�ͬһ��ڵ����δ�������Ӻ���һ��ڵ����������
+//* 原理：层序遍历利用队列实现，节点出队（并打印）时，让它的左右节点入队（先左后右）
+//* 实现：同一层节点依次从左到右入队后，下一层节点再依次入队
 
 typedef struct Node
 {
@@ -12,58 +12,58 @@ typedef struct Node
     struct Node * pRight;
 }TreeNode;
 
-//! �����ṹ�Ķ��У�β���ӡ�ͷɾ���������п�ͷ����
-//* ɾ���ڵ�������ǰһ���ڵ㣬���Բ��õ���������
-//* �п�ͷ���Լ��߼���������ͷָ��仯�����Բ����п�ͷ����
+//! 链表结构的队列：尾添加、头删除，单向有空头链表
+//* 删除节点无需找前一个节点，所以采用单向链表，
+//* 有空头可以简化逻辑，不考虑头指针变化，所以采用有空头链表
 typedef struct LLNode
 {
     TreeNode * pTreeNode;
     struct LLNode * pNext;
 }QueueNode;
 
-QueueNode QueueHead;//* ��ͷ
-QueueNode * pQueueEnd = &QueueHead;//* ��βָ��
+QueueNode QueueHead;//* 队头
+QueueNode * pQueueEnd = &QueueHead;//* 队尾指针
 
-void Push(TreeNode * Node)//β����
+void Push(TreeNode * Node)//尾添加
 {
     if(Node == NULL)
         return;
-    //�����ڵ�
+    //创建节点
     QueueNode * pNew = (QueueNode *)malloc(sizeof(QueueNode));
     if(pNew == NULL)
         return;
-    //�ڵ��Ա��ֵ
+    //节点成员赋值
     pNew->pTreeNode = Node;
     pNew->pNext = NULL;
-    //���ӣ��ڶ�β����Ԫ��
+    //链接：在队尾加入元素
     pQueueEnd->pNext = pNew;
     pQueueEnd = pNew;
 }
 
-//ͷɾ��
-TreeNode * Pop(void)//* һ��Ҫ����ɾ������β�ڵ���������ʱβָ����Ҫָ���ͷ
+//头删除
+TreeNode * Pop(void)//* 一定要考虑删除的是尾节点的情况，此时尾指针需要指向空头
 {
-    //������Ԫ�أ��������
+    //队中无元素，无需出队
     if(pQueueEnd == &QueueHead)
         return NULL;
-    //��¼��ͷ���������ӣ�
+    //记录队头（即将出队）
     QueueNode * pTemp = QueueHead.pNext;
-    //�޸�ָ��
+    //修改指向
     QueueHead.pNext = pTemp->pNext;
-    //* Ҫɾ����ͷ�ڵ�ͬʱҲ��β�ڵ�
+    //* 要删除的头节点同时也是尾节点
     if(pTemp->pNext == NULL)
         pQueueEnd = &QueueHead;
-    //* ��¼��ͷ�洢�Ķ������ڵ��ַ����Ϊ��ͷ�洢������������return ֮ǰ�Ѿ����ͷţ�������Ҫ���صĶ������ڵ��ַ
+    //* 记录队头存储的二叉树节点地址，因为队头存储的所有内容在return 之前已经被释放，包括需要返回的二叉树节点地址
     TreeNode * pNode = pTemp->pTreeNode;
-    //�ͷŶ�ͷ
+    //释放队头
     free(pTemp);
-    //����ԭ���Ķ�ͷ
+    //返回原来的队头
     return pNode;
 }
 
 void Look(TreeNode * pRoot)
 {
-    //��ֹ�ն�����
+    //防止空二叉树
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
@@ -76,7 +76,7 @@ void Look(TreeNode * pRoot)
             Push(pCurrent->pLeft);
         if(pCurrent->pRight !=  NULL)
             Push(pCurrent->pRight);
-        //* ����ʱ��������һ��ڵ���ӣ�����ֻ����һ��û�нڵ㼴����Ϊ���һ��ʱ������ڵ�ȫ�����Ӻ���п��ˣ���ʱ�����������������
+        //* 出队时伴随着下一层节点入队，所以只有下一层没有节点即本层为最后一层时，本层节点全部出队后队列空了，此时二叉树层序遍历结束
         if(pQueueEnd == &QueueHead)
             return;
     }

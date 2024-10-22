@@ -3,33 +3,33 @@
 #include <malloc.h>
 #include <stdbool.h>
 
-//! Õ»¶àÓÃÁ´±íÊµÏÖ
+//! æ ˆå¤šç”¨é“¾è¡¨å®ç°
 
-//! Õ»ÊÇ²Ù×÷·½·¨£¬ÒªÇóÏÈ½øºó³ö£¬ºó½øÏÈ³ö
-//! Ö»Òª±£Ö¤²åÈëºÍÉ¾³ı¶¼ÔÚÍ¬Ò»¶Ë½øĞĞ£¬¾ÍÊÇÕ»
-//! Êı×éĞ´Õ»²»ÓÃÍ·Ìí¼Ó£¬ÒòÎªÌí¼ÓÒ»¸ö£¬ºóÃæÊı¾İĞèÒªÈ«²¿ÍùºóÅ²£¬Ö´ĞĞĞ§ÂÊµÍ£¬ËùÒÔ²ÉÓÃÎ²Ìí¼Ó
+//! æ ˆæ˜¯æ“ä½œæ–¹æ³•ï¼Œè¦æ±‚å…ˆè¿›åå‡ºï¼Œåè¿›å…ˆå‡º
+//! åªè¦ä¿è¯æ’å…¥å’Œåˆ é™¤éƒ½åœ¨åŒä¸€ç«¯è¿›è¡Œï¼Œå°±æ˜¯æ ˆ
+//! æ•°ç»„å†™æ ˆä¸ç”¨å¤´æ·»åŠ ï¼Œå› ä¸ºæ·»åŠ ä¸€ä¸ªï¼Œåé¢æ•°æ®éœ€è¦å…¨éƒ¨å¾€åæŒªï¼Œæ‰§è¡Œæ•ˆç‡ä½ï¼Œæ‰€ä»¥é‡‡ç”¨å°¾æ·»åŠ 
 
-//! Ñ¹Õ»³öÕ»µÄ¹ı³ÌºÍµİ¹éµÄ¹ı³ÌÒ»Ñù£¬×îÏÈÖ´ĞĞµÄº¯Êı£¨×îÏÈÑ¹Õ»£©×îºó½áÊø£¨×îºó³öÕ»£©
+//! å‹æ ˆå‡ºæ ˆçš„è¿‡ç¨‹å’Œé€’å½’çš„è¿‡ç¨‹ä¸€æ ·ï¼Œæœ€å…ˆæ‰§è¡Œçš„å‡½æ•°ï¼ˆæœ€å…ˆå‹æ ˆï¼‰æœ€åç»“æŸï¼ˆæœ€åå‡ºæ ˆï¼‰
 
 #define NUM 10
 
 struct Node
 {
     int Arr[NUM];
-    int Index;//Êµ¼Ê±íÕ÷ÊıÁ¿
+    int Index;//å®é™…è¡¨å¾æ•°é‡
 };
 
-//* Õ»£ºÉêÇëÒ»¸öÕ»¿ÕÍ·
+//* æ ˆï¼šç”³è¯·ä¸€ä¸ªæ ˆç©ºå¤´
 struct Node * Stack(void);
-//* ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
+//* åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
 bool isEmpty(struct Node * pStack);
-//* Ñ¹Õ»£ºÌí¼Ó½Úµã(Î²Ìí¼Ó)
+//* å‹æ ˆï¼šæ·»åŠ èŠ‚ç‚¹(å°¾æ·»åŠ )
 void Push(struct Node * pStack, int Data);
-//* »ñÈ¡Õ»¶¥½Úµã
+//* è·å–æ ˆé¡¶èŠ‚ç‚¹
 int Top(struct Node * pStack);
-//* É¾³ıÕ»¶¥½Úµã(Î²½Úµã)
+//* åˆ é™¤æ ˆé¡¶èŠ‚ç‚¹(å°¾èŠ‚ç‚¹)
 void Pop(struct Node * pStack);
-//* ÊÍ·ÅÕ»
+//* é‡Šæ”¾æ ˆ
 void FreeStack(struct Node ** stack);
 
 int main(void)
@@ -48,7 +48,7 @@ int main(void)
     Push(pStack, Array[7]);
     Push(pStack, Array[8]);
     Push(pStack, Array[9]);
-    Push(pStack, 11);//³¬ÈİÁ¿£¬ÎŞ·¨¼ÓÈë
+    Push(pStack, 11);//è¶…å®¹é‡ï¼Œæ— æ³•åŠ å…¥
 
     int a = pStack->Arr[Top(pStack)];
     printf("%d\n", a);
@@ -79,7 +79,7 @@ bool isEmpty(struct Node * pStack)
 
 void Push(struct Node * pStack, int Data)
 {
-    if(pStack == NULL || pStack->Index >= NUM)//Êı×éÓĞ¹Ì¶¨ÈİÁ¿£¬×¢Òâ²»ÒªÔ½½ç
+    if(pStack == NULL || pStack->Index >= NUM)//æ•°ç»„æœ‰å›ºå®šå®¹é‡ï¼Œæ³¨æ„ä¸è¦è¶Šç•Œ
         return;
     pStack->Arr[pStack->Index] = Data;
     pStack->Index ++;
@@ -89,7 +89,7 @@ int Top(struct Node * pStack)
 {
     if(isEmpty(pStack))
         return 0;
-    return pStack->Index - 1;//·µ»ØÎ²Êı¾İÏÂ±ê
+    return pStack->Index - 1;//è¿”å›å°¾æ•°æ®ä¸‹æ ‡
 }
 
 void Pop(struct Node * pStack)

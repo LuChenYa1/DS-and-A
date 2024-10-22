@@ -61,7 +61,7 @@ int main(void)
     t9.pFather = &t6;
     t10.pFather = &t6;
 
-    printf("二叉树高度为%d\n", Count(&t1));
+    printf("浜屽弶鏍戦珮搴︿负%d\n", Count(&t1));
 
     return 0;
 } 

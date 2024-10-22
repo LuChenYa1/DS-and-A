@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <malloc.h>
 
-//* ԭ��������������ö���ʵ�֣��ڵ���ӣ�����ӡ��ʱ�����������ҽڵ���ӣ�������ң�
-//* ʵ�֣�ͬһ��ڵ����δ�������Ӻ���һ��ڵ����������
+//* 原理：层序遍历利用队列实现，节点出队（并打印）时，让它的左右节点入队（先左后右）
+//* 实现：同一层节点依次从左到右入队后，下一层节点再依次入队
 
 typedef struct Node
 {
@@ -12,41 +12,41 @@ typedef struct Node
     struct Node * pRight;
 }TreeNode;
 
-//* �ƶ���
-#define Queue_Size 4 //* ����ÿ��Ľڵ�������������Ĳ�Ľڵ������Ϊ����������������ӹ��������ɵ����ڵ�����
+//* 移动型
+#define Queue_Size 4 //* 计算每层的节点个数，个数最多的层的节点个数即为队列在整个出队入队过程中容纳的最多节点数量
 TreeNode * Queue[Queue_Size];
-int QueueHead = 0;//* ��ͷ
-int QueueEnd = -1;//* ��β
+int QueueHead = 0;//* 队头
+int QueueEnd = -1;//* 队尾
 
 void Push(TreeNode * Node)
 {
-    //����Ԫ�ؼ�һ
+    //队列元素加一
     QueueEnd ++;
-    //�ڶ�β����Ԫ��
+    //在队尾加入元素
     Queue[QueueEnd] = Node;
 }
 
 TreeNode * Pop(void)
 {
-    //������Ԫ�أ��������
+    //队中无元素，无需出队
     if(QueueEnd < QueueHead)
         return NULL;
-    //��¼��ͷ���������ӣ�
+    //记录队头（即将出队）
     TreeNode * pTemp = Queue[0];
-    //�����Ԫ��ȫ����ǰ�ƶ�����ԭ���Ķ�ͷ����ȥ
+    //后面的元素全部往前移动，把原来的队头挤出去
     for(int i = 0; i < QueueEnd; i++)
     {
         Queue[i] = Queue[i + 1];
     }
-    //����Ԫ�ؼ�һ
+    //队列元素减一
     QueueEnd --;
-    //����ԭ���Ķ�ͷ
+    //返回原来的队头
     return pTemp;
 }
 
 void Look(TreeNode * pRoot)
 {
-    //��ֹ�ն�����
+    //防止空二叉树
     if(pRoot == NULL)
         return;
     TreeNode * pCurrent = pRoot;
@@ -59,7 +59,7 @@ void Look(TreeNode * pRoot)
             Push(pCurrent->pLeft);
         if(pCurrent->pRight !=  NULL)
             Push(pCurrent->pRight);
-        //* ����ʱ��������һ��ڵ���ӣ�����ֻ����һ��û�нڵ㼴����Ϊ���һ��ʱ������ڵ�ȫ�����Ӻ���п��ˣ���ʱ�����������������
+        //* 出队时伴随着下一层节点入队，所以只有下一层没有节点即本层为最后一层时，本层节点全部出队后队列空了，此时二叉树层序遍历结束
         if(QueueEnd == -1)
             return;
     }

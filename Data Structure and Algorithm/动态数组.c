@@ -4,20 +4,20 @@
 
 struct ActArrayType
 {
-    unsigned int Capacity;//¿Õ¼äÈİÁ¿
-    int * pArray;//malloc¿Õ¼äÖ¸Õë
-    unsigned int Number;//Êı¾İÊıÁ¿
+    unsigned int Capacity;//ç©ºé—´å®¹é‡
+    int * pArray;//mallocç©ºé—´æŒ‡é’ˆ
+    unsigned int Number;//æ•°æ®æ•°é‡
 };
 
-void Struct_Init(struct ActArrayType * pStruct);//*½á¹¹Ìå³õÊ¼»¯
-void Ensure_EnoughCapacity(struct ActArrayType * pStruct);//* È·±£¶¯Ì¬Êı×é¿Õ¼äÈİÁ¿³ä×ã
-void Malloc_Add(struct ActArrayType * pStruct, int Data);//* ¶¯Ì¬Êı×éÔö¼ÓÔªËØ
-void Malloc_Insert(struct ActArrayType *pStruct, int Data, unsigned char Subscript);//* ¶¯Ì¬Êı×é²åÈëÔªËØ
-void Malloc_Delete_End(struct ActArrayType *pStruct);//* ¶¯Ì¬Êı×éÉ¾³ıÄ©Î²ÔªËØ
-void Malloc_Delete_All(struct ActArrayType *pStruct);//* ¶¯Ì¬Êı×éÉ¾³ıÈ«²¿ÔªËØ
-void Malloc_freeSpace(struct ActArrayType *pStruct);//* ÊÍ·Åµ±Ç°µÄ¶¯Ì¬Êı×é
-void Malloc_Delete(struct ActArrayType *pStruct, unsigned char Subscript);//* É¾³ıÖ¸¶¨ÏÂ±êµÄÔªËØ
-void Print_ActArray(struct ActArrayType *pStruct);//*´òÓ¡¶¯Ì¬Êı×éĞÅÏ¢
+void Struct_Init(struct ActArrayType * pStruct);//*ç»“æ„ä½“åˆå§‹åŒ–
+void Ensure_EnoughCapacity(struct ActArrayType * pStruct);//* ç¡®ä¿åŠ¨æ€æ•°ç»„ç©ºé—´å®¹é‡å……è¶³
+void Malloc_Add(struct ActArrayType * pStruct, int Data);//* åŠ¨æ€æ•°ç»„å¢åŠ å…ƒç´ 
+void Malloc_Insert(struct ActArrayType *pStruct, int Data, unsigned char Subscript);//* åŠ¨æ€æ•°ç»„æ’å…¥å…ƒç´ 
+void Malloc_Delete_End(struct ActArrayType *pStruct);//* åŠ¨æ€æ•°ç»„åˆ é™¤æœ«å°¾å…ƒç´ 
+void Malloc_Delete_All(struct ActArrayType *pStruct);//* åŠ¨æ€æ•°ç»„åˆ é™¤å…¨éƒ¨å…ƒç´ 
+void Malloc_freeSpace(struct ActArrayType *pStruct);//* é‡Šæ”¾å½“å‰çš„åŠ¨æ€æ•°ç»„
+void Malloc_Delete(struct ActArrayType *pStruct, unsigned char Subscript);//* åˆ é™¤æŒ‡å®šä¸‹æ ‡çš„å…ƒç´ 
+void Print_ActArray(struct ActArrayType *pStruct);//*æ‰“å°åŠ¨æ€æ•°ç»„ä¿¡æ¯
 
 int main(void)
 {
@@ -35,120 +35,120 @@ int main(void)
     Malloc_Insert(&ActArray, 9, 10);
 
     //Print_ActArray(NULL);
-    Print_ActArray(&ActArray);//Êä³ö
+    Print_ActArray(&ActArray);//è¾“å‡º
 
     Malloc_Delete_End(&ActArray);
     Malloc_Delete_End(&ActArray);
     Malloc_Delete_All(&ActArray);
     Malloc_freeSpace(&ActArray);
-    Print_ActArray(&ActArray);//ÔÙ´ÎÊä³ö
+    Print_ActArray(&ActArray);//å†æ¬¡è¾“å‡º
 
     Struct_Init(&ActArray);
     Malloc_Add(&ActArray, 1);
     Malloc_Add(&ActArray, 2);
     Malloc_Add(&ActArray, 4);
-    Print_ActArray(&ActArray);//ÔÙ´ÎÊä³ö
+    Print_ActArray(&ActArray);//å†æ¬¡è¾“å‡º
 
     Malloc_Delete(&ActArray, 1);
-    Print_ActArray(&ActArray);//ÔÙ´ÎÊä³ö
+    Print_ActArray(&ActArray);//å†æ¬¡è¾“å‡º
 
-    free(ActArray.pArray);//*ÊÍ·Å¾É¿Õ¼ä
+    free(ActArray.pArray);//*é‡Šæ”¾æ—§ç©ºé—´
 
-    //!system("pause");Ğèµã»÷ÈÎÒâ¼üÒÔ¼ÌĞø³ÌĞòÔËĞĞ
+    //!system("pause");éœ€ç‚¹å‡»ä»»æ„é”®ä»¥ç»§ç»­ç¨‹åºè¿è¡Œ
     return 0;
 }
 
-void Struct_Init(struct ActArrayType * pStruct)//*½á¹¹Ìå³õÊ¼»¯
+void Struct_Init(struct ActArrayType * pStruct)//*ç»“æ„ä½“åˆå§‹åŒ–
 {
     pStruct->Capacity = 5;
     pStruct->pArray = (int *)malloc(sizeof(int) * 10);
     pStruct->Number = 0;
 }
 
-void Ensure_EnoughCapacity(struct ActArrayType * pStruct)//* È·±£malloc¿Õ¼äÈİÁ¿³ä×ã
+void Ensure_EnoughCapacity(struct ActArrayType * pStruct)//* ç¡®ä¿mallocç©ºé—´å®¹é‡å……è¶³
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
-        return;//voidº¯Êı£¬·µ»Ø¿Õ
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
+        return;//voidå‡½æ•°ï¼Œè¿”å›ç©º
     }
     
-    if(pStruct->Capacity == pStruct->Number)//Êı¾İÊıÁ¿²»Ğ¡ÓÚ¿Õ¼äÈİÁ¿
+    if(pStruct->Capacity == pStruct->Number)//æ•°æ®æ•°é‡ä¸å°äºç©ºé—´å®¹é‡
     {
-        pStruct->Capacity += 5;//Ôö¼ÓÈİÁ¿
-        int *pTemp = (int *)malloc(sizeof(int) * pStruct->Capacity);//ÉêÇë¿Õ¼ä
-        for (int i = 0; i < pStruct->Number; i++)//Ô­Ñù¸´ÖÆ
+        pStruct->Capacity += 5;//å¢åŠ å®¹é‡
+        int *pTemp = (int *)malloc(sizeof(int) * pStruct->Capacity);//ç”³è¯·ç©ºé—´
+        for (int i = 0; i < pStruct->Number; i++)//åŸæ ·å¤åˆ¶
         {
             pTemp[i] = pStruct->pArray[i];
         }
-        free(pStruct->pArray);//*ÊÍ·Å¾É¿Õ¼ä
-        pStruct->pArray = pTemp;//½«Ö¸ÕëÖ¸ÏòĞÂ¿Õ¼äµØÖ·
+        free(pStruct->pArray);//*é‡Šæ”¾æ—§ç©ºé—´
+        pStruct->pArray = pTemp;//å°†æŒ‡é’ˆæŒ‡å‘æ–°ç©ºé—´åœ°å€
     }
 }
 
-void Malloc_Add(struct ActArrayType * pStruct, int Data)//*malloc¶¯Ì¬Êı×éÔö¼ÓÔªËØ
+void Malloc_Add(struct ActArrayType * pStruct, int Data)//*mallocåŠ¨æ€æ•°ç»„å¢åŠ å…ƒç´ 
 {  
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
-        return;//voidº¯Êı£¬·µ»Ø¿Õ
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
+        return;//voidå‡½æ•°ï¼Œè¿”å›ç©º
     }
 
     Ensure_EnoughCapacity(pStruct);
 
-    pStruct->pArray[pStruct->Number] = Data;//*½«ĞÂÔªËØ·Åµ½Êı×éÀï
+    pStruct->pArray[pStruct->Number] = Data;//*å°†æ–°å…ƒç´ æ”¾åˆ°æ•°ç»„é‡Œ
     pStruct->Number ++;
 }
 
-void Malloc_Insert(struct ActArrayType *pStruct, int Data, unsigned char Subscript)//*malloc¶¯Ì¬Êı×é²åÈëÔªËØ
+void Malloc_Insert(struct ActArrayType *pStruct, int Data, unsigned char Subscript)//*mallocåŠ¨æ€æ•°ç»„æ’å…¥å…ƒç´ 
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
-        return;//voidº¯Êı£¬·µ»Ø¿Õ
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
+        return;//voidå‡½æ•°ï¼Œè¿”å›ç©º
     }
 
     Ensure_EnoughCapacity(pStruct);
     
-    if(Subscript >= pStruct->Number) Subscript = pStruct->Number;//*ÏÂ±ê¹ı´óÊ±£¬ÅÅÔÚËùÓĞÔªËØÄ©Î²
+    if(Subscript >= pStruct->Number) Subscript = pStruct->Number;//*ä¸‹æ ‡è¿‡å¤§æ—¶ï¼Œæ’åœ¨æ‰€æœ‰å…ƒç´ æœ«å°¾
 
-    for(unsigned int i = pStruct->Number; i > Subscript; i--)//*´Ó²åÈë´¦ÍùºóÅ²£¬¸øĞÂÔªËØÁô¿ÕÎ»
+    for(unsigned int i = pStruct->Number; i > Subscript; i--)//*ä»æ’å…¥å¤„å¾€åæŒªï¼Œç»™æ–°å…ƒç´ ç•™ç©ºä½
     {
         pStruct->pArray[i] = pStruct->pArray[i - 1];
     }
 
-    pStruct->pArray[Subscript] = Data;//Êı¾İ¸ù¾İÏÂ±ê¸³Öµµ½Ö¸¶¨Î»ÖÃ
+    pStruct->pArray[Subscript] = Data;//æ•°æ®æ ¹æ®ä¸‹æ ‡èµ‹å€¼åˆ°æŒ‡å®šä½ç½®
 
     pStruct->Number ++;
 }
 
-void Malloc_Delete_End(struct ActArrayType *pStruct)//* malloc¶¯Ì¬Êı×éÉ¾³ıÄ©Î²ÔªËØ
+void Malloc_Delete_End(struct ActArrayType *pStruct)//* mallocåŠ¨æ€æ•°ç»„åˆ é™¤æœ«å°¾å…ƒç´ 
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
         return;
     }
     pStruct->Number --;
-    //! Ö»ĞèÒª½«ÊıÁ¿¼õÒ»£¬ÔªËØÃ»±ØÒªÇåÁã£¬ÇåÁãºÍ±£ÁôÔ­ÖµÃ»Çø±ğ£¬ÏµÍ³Ö»ÈÏÔªËØÊıÁ¿
-    // ÕâÀïÉ¾³ıÔªËØºóÈç¹ûÊıÁ¿ºÍÈİÁ¿²»Æ¥Åä£¬Ò»°ã²»ĞèÒªÖØĞÂÉêÇë¿Õ¼ä£¬¾¡Á¿¼õÉÙ¶àÓà²Ù×÷£¬ÒòÎª´ó¸ÅÂÊºóÃæĞèÒªÔÙÔö¼ÓÔªËØ
+    //! åªéœ€è¦å°†æ•°é‡å‡ä¸€ï¼Œå…ƒç´ æ²¡å¿…è¦æ¸…é›¶ï¼Œæ¸…é›¶å’Œä¿ç•™åŸå€¼æ²¡åŒºåˆ«ï¼Œç³»ç»Ÿåªè®¤å…ƒç´ æ•°é‡
+    // è¿™é‡Œåˆ é™¤å…ƒç´ åå¦‚æœæ•°é‡å’Œå®¹é‡ä¸åŒ¹é…ï¼Œä¸€èˆ¬ä¸éœ€è¦é‡æ–°ç”³è¯·ç©ºé—´ï¼Œå°½é‡å‡å°‘å¤šä½™æ“ä½œï¼Œå› ä¸ºå¤§æ¦‚ç‡åé¢éœ€è¦å†å¢åŠ å…ƒç´ 
 }
 
-void Malloc_Delete_All(struct ActArrayType *pStruct)//* malloc¶¯Ì¬Êı×éÉ¾³ıÈ«²¿ÔªËØ
+void Malloc_Delete_All(struct ActArrayType *pStruct)//* mallocåŠ¨æ€æ•°ç»„åˆ é™¤å…¨éƒ¨å…ƒç´ 
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
         return;
     }
     pStruct->Number = 0;
 }
 
-void Malloc_freeSpace(struct ActArrayType *pStruct)// ÊÍ·Åµ±Ç°µÄmalloc¶¯Ì¬Êı×é
+void Malloc_freeSpace(struct ActArrayType *pStruct)// é‡Šæ”¾å½“å‰çš„mallocåŠ¨æ€æ•°ç»„
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
         return;
     }
     pStruct->Number = 0;
@@ -157,34 +157,34 @@ void Malloc_freeSpace(struct ActArrayType *pStruct)// ÊÍ·Åµ±Ç°µÄmalloc¶¯Ì¬Êı×é
     pStruct->pArray = NULL;
 }
 
-void Malloc_Delete(struct ActArrayType *pStruct, unsigned char Subscript)//* É¾³ıÖ¸¶¨ÏÂ±êµÄÔªËØ
+void Malloc_Delete(struct ActArrayType *pStruct, unsigned char Subscript)//* åˆ é™¤æŒ‡å®šä¸‹æ ‡çš„å…ƒç´ 
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
         return;
     }
 
-    for(unsigned int i = Subscript; i < pStruct->Number - 1; i++)//* ´ÓÉ¾³ıµã¿ªÊ¼£¬½«ºóÃæµÄÔªËØÇ°ÒÆ
+    for(unsigned int i = Subscript; i < pStruct->Number - 1; i++)//* ä»åˆ é™¤ç‚¹å¼€å§‹ï¼Œå°†åé¢çš„å…ƒç´ å‰ç§»
     {
         pStruct->pArray[i] = pStruct->pArray[i + 1];
     }
     pStruct->Number --;
 }
 
-void Print_ActArray(struct ActArrayType *pStruct)//*´òÓ¡malloc¶¯Ì¬Êı×éĞÅÏ¢
+void Print_ActArray(struct ActArrayType *pStruct)//*æ‰“å°mallocåŠ¨æ€æ•°ç»„ä¿¡æ¯
 {
     if(NULL == pStruct)
     {
-        fprintf(stderr, "²ÎÊı´íÎó\n"); // Ê¹ÓÃstderrÊä³ö´íÎóĞÅÏ¢
+        fprintf(stderr, "å‚æ•°é”™è¯¯\n"); // ä½¿ç”¨stderrè¾“å‡ºé”™è¯¯ä¿¡æ¯
         return;
     }
 
     printf("Number:%d, Capacity:%d\n", pStruct->Number, pStruct->Capacity);
-    printf("ÏÖÓĞÔªËØ:");
+    printf("ç°æœ‰å…ƒç´ :");
     for (size_t i = 0; i < pStruct->Number; i++)
     {
-        // printf("%p\n", &(pStruct.pArray[i]));Ö¸ÕëÀàĞÍÊÇint£¬¹Ê¼ÓÒ»¿Õ¼äµØÖ·Ç°½øËÄ×Ö½Ú
+        // printf("%p\n", &(pStruct.pArray[i]));æŒ‡é’ˆç±»å‹æ˜¯intï¼Œæ•…åŠ ä¸€ç©ºé—´åœ°å€å‰è¿›å››å­—èŠ‚
         printf("%d ", pStruct->pArray[i]);
     }
     printf("\n");

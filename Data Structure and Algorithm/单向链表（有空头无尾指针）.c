@@ -2,11 +2,11 @@
 #include <string.h>
 #include <malloc.h>
 
-//! Ã»ÓĞÎ²Ö¸Õë£¬ÓĞ¿ÕÍ·         ÓĞ¿ÕÍ· ¼ò»¯´úÂëÂß¼­£¬ÉÙÁËÅĞ¶ÏÍ·Î²µÄ¹ı³Ì
-//! ¿ÕÍ·µÄÊı¾İ±äÁ¿ÓÃÓÚ´æ´¢½ÚµãÊıÁ¿, ×î´ó³Ì¶ÈÀûÓÃÁ´±í¿Õ¼ä
-//! ¼Ó½Úµã¼ÆÊıÆ÷£¬Òª×¢ÒâÊıÁ¿±ä»¯
+//! æ²¡æœ‰å°¾æŒ‡é’ˆï¼Œæœ‰ç©ºå¤´         æœ‰ç©ºå¤´ ç®€åŒ–ä»£ç é€»è¾‘ï¼Œå°‘äº†åˆ¤æ–­å¤´å°¾çš„è¿‡ç¨‹
+//! ç©ºå¤´çš„æ•°æ®å˜é‡ç”¨äºå­˜å‚¨èŠ‚ç‚¹æ•°é‡, æœ€å¤§ç¨‹åº¦åˆ©ç”¨é“¾è¡¨ç©ºé—´
+//! åŠ èŠ‚ç‚¹è®¡æ•°å™¨ï¼Œè¦æ³¨æ„æ•°é‡å˜åŒ–
 
-//! Êµ¼ÊÇé¿öÎ²Ìí¼Ó×îÆµ·±£¬¹ÊĞèÒªÎ²Ö¸Õë£¬±ÜÃâÃ¿´ÎÎ²Ìí¼Ó¶¼Òª´ÓÍ·ÂÖÑ¯µ½Î²½Úµã£¬Ìá¸ßÖ´ĞĞĞ§ÂÊ
+//! å®é™…æƒ…å†µå°¾æ·»åŠ æœ€é¢‘ç¹ï¼Œæ•…éœ€è¦å°¾æŒ‡é’ˆï¼Œé¿å…æ¯æ¬¡å°¾æ·»åŠ éƒ½è¦ä»å¤´è½®è¯¢åˆ°å°¾èŠ‚ç‚¹ï¼Œæé«˜æ‰§è¡Œæ•ˆç‡
 
 typedef struct Node
 {
@@ -14,38 +14,38 @@ typedef struct Node
     struct Node *pNext;
 }LLNode;
 
-//* Ôö
-void AddToHead(LLNode * stHead, int Data);//* Í·Ìí¼Ó
-void AddToEnd(LLNode * stHead, int Data);//* Î²Ìí¼Ó
-void AddBehandData(LLNode * stHead, int PosData, int DesData);//* ÔÚÄ¿±êÊı¾İºóÃæ²åÈë½Úµã
-void AddNodeByIndex(LLNode * stHead, int Index, int Data);//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
-void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data);//* ÔÚÖ¸¶¨Î»ÖÃ²åÈë¶à¸ö½Úµã
+//* å¢
+void AddToHead(LLNode * stHead, int Data);//* å¤´æ·»åŠ 
+void AddToEnd(LLNode * stHead, int Data);//* å°¾æ·»åŠ 
+void AddBehandData(LLNode * stHead, int PosData, int DesData);//* åœ¨ç›®æ ‡æ•°æ®åé¢æ’å…¥èŠ‚ç‚¹
+void AddNodeByIndex(LLNode * stHead, int Index, int Data);//* åœ¨æŒ‡å®šä¸‹æ ‡æ’å…¥èŠ‚ç‚¹
+void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data);//* åœ¨æŒ‡å®šä½ç½®æ’å…¥å¤šä¸ªèŠ‚ç‚¹
 
-//* É¾
-void DeleteNodeByData(LLNode * stHead, int Data);//* Í¨¹ıÊı¾İÉ¾³ı½Úµã
-void DeleteNodeByIndex(LLNode * stHead, int Index);//* Í¨¹ıÏÂ±êÉ¾³ı½Úµã
-void DeleteSame(LLNode * stHead);//* Á´±íÈ¥ÖØ
+//* åˆ 
+void DeleteNodeByData(LLNode * stHead, int Data);//* é€šè¿‡æ•°æ®åˆ é™¤èŠ‚ç‚¹
+void DeleteNodeByIndex(LLNode * stHead, int Index);//* é€šè¿‡ä¸‹æ ‡åˆ é™¤èŠ‚ç‚¹
+void DeleteSame(LLNode * stHead);//* é“¾è¡¨å»é‡
 
-//* ¸Ä
-void ChangeNodeByData(LLNode * stHead, int OldData, int NewData);//* Í¨¹ıÊı¾İĞŞ¸Ä½Úµã
-void ChangeAllNodeByData(LLNode * stHead, int OldData, int NewData);//* Í¨¹ıÊı¾İĞŞ¸ÄËùÓĞ·ûºÏÒªÇóµÄ½Úµã
-void ChangeNodeByIndex(LLNode * stHead, int Index, int Data);//* Í¨¹ıÏÂ±êĞŞ¸Ä½Úµã
+//* æ”¹
+void ChangeNodeByData(LLNode * stHead, int OldData, int NewData);//* é€šè¿‡æ•°æ®ä¿®æ”¹èŠ‚ç‚¹
+void ChangeAllNodeByData(LLNode * stHead, int OldData, int NewData);//* é€šè¿‡æ•°æ®ä¿®æ”¹æ‰€æœ‰ç¬¦åˆè¦æ±‚çš„èŠ‚ç‚¹
+void ChangeNodeByIndex(LLNode * stHead, int Index, int Data);//* é€šè¿‡ä¸‹æ ‡ä¿®æ”¹èŠ‚ç‚¹
 
-//* ²é      ²éÕÒ½Úµã²»Éæ¼°ĞŞ¸Ä£¬¿ÉÒÔ´«Èë½á¹¹Ìå±¾Éí£¬µ«Ö´ĞĞĞ§ÂÊ±äµÍ
-LLNode * FindNodeByData(LLNode * stHead, int Data);//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
-LLNode * FindNodeByIndex(LLNode * stHead, int Index);//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
+//* æŸ¥      æŸ¥æ‰¾èŠ‚ç‚¹ä¸æ¶‰åŠä¿®æ”¹ï¼Œå¯ä»¥ä¼ å…¥ç»“æ„ä½“æœ¬èº«ï¼Œä½†æ‰§è¡Œæ•ˆç‡å˜ä½
+LLNode * FindNodeByData(LLNode * stHead, int Data);//* é€šè¿‡æ•°æ®æŸ¥æ‰¾èŠ‚ç‚¹
+LLNode * FindNodeByIndex(LLNode * stHead, int Index);//* é€šè¿‡ä¸‹æ ‡æŸ¥æ‰¾èŠ‚ç‚¹
 
 
-void FreeList(LLNode * stHead);//* ÊÍ·ÅÁ´±í
+void FreeList(LLNode * stHead);//* é‡Šæ”¾é“¾è¡¨
 
-void PrintList(LLNode stHead);//* ´òÓ¡Á´±í
+void PrintList(LLNode stHead);//* æ‰“å°é“¾è¡¨
 
 int main(void)
 {
-    //¶¨ÒåÒ»¸ö¿ÕÍ·
+    //å®šä¹‰ä¸€ä¸ªç©ºå¤´
     LLNode stHead = {0, NULL};
 
-    //*Ôö
+    //*å¢
     AddToHead(&stHead, 4);
     AddToEnd(&stHead, 5);
     AddToHead(&stHead, 2);
@@ -55,17 +55,17 @@ int main(void)
     AddSomeNodeByIndex(&stHead, 0, 3, 6);
     PrintList(stHead);
 
-    //* ¸Ä
+    //* æ”¹
     ChangeNodeByData(&stHead, 6, 7);
     ChangeNodeByIndex(&stHead, 7, 8);
     ChangeAllNodeByData(&stHead, 6, 9);
     PrintList(stHead);
 
-    //* É¾
+    //* åˆ 
     DeleteNodeByIndex(&stHead, 7);
     DeleteNodeByData(&stHead, 9);
     PrintList(stHead);
-    //ÊµÑéÈ¥ÖØ
+    //å®éªŒå»é‡
     AddToEnd(&stHead, 5);
     AddToEnd(&stHead, 4);
     AddToEnd(&stHead, 3);
@@ -76,63 +76,63 @@ int main(void)
     DeleteSame(&stHead);
     PrintList(stHead);
     
-    //* ²é
+    //* æŸ¥
     if(FindNodeByData(&stHead, 6) == NULL)
-        printf("Ã»ÕÒµ½\n");
+        printf("æ²¡æ‰¾åˆ°\n");
     else
-        printf("ÕÒµ½ÁË\n");
+        printf("æ‰¾åˆ°äº†\n");
 
     FreeList(&stHead);
     
     return 0;
 }
 
-void AddToHead(LLNode * stHead, int Data)//* Í·Ìí¼Ó
+void AddToHead(LLNode * stHead, int Data)//* å¤´æ·»åŠ 
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data < 0)
         return;
-    //´´½¨½Úµã
+    //åˆ›å»ºèŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode != NULL)
     {
-        //½Úµã³ÉÔ±¸³Öµ
+        //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
         pNewNode->Data = Data;
         pNewNode->pNext = NULL;
-        //Á´½Ó
+        //é“¾æ¥
         LLNode * pTemp = stHead->pNext;
         stHead->pNext = pNewNode;
         pNewNode->pNext = pTemp;
-        //¼ÆÊıÆ÷¼ÓÒ»
+        //è®¡æ•°å™¨åŠ ä¸€
         stHead->Data ++;       
     }
 }
 
-void AddToEnd(LLNode * stHead, int Data)//* Î²Ìí¼Ó
+void AddToEnd(LLNode * stHead, int Data)//* å°¾æ·»åŠ 
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data < 0)
         return;
-    //´´½¨½Úµã
+    //åˆ›å»ºèŠ‚ç‚¹
     LLNode * pNewNode = (LLNode *)malloc(sizeof(LLNode));
     if(pNewNode != NULL)
     {
-        //½Úµã³ÉÔ±¸³Öµ
+        //èŠ‚ç‚¹æˆå‘˜èµ‹å€¼
         pNewNode->Data = Data;
         pNewNode->pNext = NULL;
-        //Á´½Ó
+        //é“¾æ¥
         LLNode * pCurrent = stHead;
         while(pCurrent->pNext != NULL)
             pCurrent = pCurrent->pNext;
         pCurrent->pNext = pNewNode;
-        //¼ÆÊıÆ÷¼ÓÒ»
+        //è®¡æ•°å™¨åŠ ä¸€
         stHead->Data ++;       
     }
 }
 
-void AddBehandData(LLNode * stHead, int PosData, int DesData)//* ÔÚÄ¿±êÊı¾İºóÃæ²åÈë½Úµã
+void AddBehandData(LLNode * stHead, int PosData, int DesData)//* åœ¨ç›®æ ‡æ•°æ®åé¢æ’å…¥èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data < 0)
         return;
     LLNode * pPosData = FindNodeByData(stHead, PosData);
@@ -144,10 +144,10 @@ void AddBehandData(LLNode * stHead, int PosData, int DesData)//* ÔÚÄ¿±êÊı¾İºóÃæ²
     }
 }
 
-void AddNodeByIndex(LLNode * stHead, int Index, int Data)//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
+void AddNodeByIndex(LLNode * stHead, int Index, int Data)//* åœ¨æŒ‡å®šä¸‹æ ‡æ’å…¥èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* ¿ÉÒÔÎ²Ìí¼Ó
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
+    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* å¯ä»¥å°¾æ·»åŠ 
         return;
     LLNode * pFormer = FindNodeByIndex(stHead, Index - 1);
     if(pFormer != NULL)
@@ -158,10 +158,10 @@ void AddNodeByIndex(LLNode * stHead, int Index, int Data)//* ÔÚÖ¸¶¨ÏÂ±ê²åÈë½Úµã
     }
 }
 
-void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data)//* ÔÚÖ¸¶¨Î»ÖÃ²åÈë¶à¸ö½Úµã
+void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data)//* åœ¨æŒ‡å®šä½ç½®æ’å…¥å¤šä¸ªèŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* ¿ÉÒÔÎ²Ìí¼Ó
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
+    if(stHead == NULL || stHead->Data < 0 || Index < 0 || Index > stHead->Data)//* å¯ä»¥å°¾æ·»åŠ 
         return;
     LLNode * pFormer = FindNodeByIndex(stHead, Index - 1);
     if(pFormer != NULL)
@@ -175,15 +175,15 @@ void AddSomeNodeByIndex(LLNode * stHead, int Index, int Number, int Data)//* ÔÚÖ
     }
 }
 
-void DeleteSame(LLNode * stHead)//* Á´±íÈ¥ÖØ
+void DeleteSame(LLNode * stHead)//* é“¾è¡¨å»é‡
 {
     if(stHead == NULL || stHead->Data <= 1)
         return;
-    //Ñ­»·±éÀú
-    LLNode * pCurrent = stHead->pNext;//Òª±»±È¶ÔÊı¾İµÄ½Úµã£¬²»ÄÜÊÇ¿ÕÍ·
-    while(pCurrent->pNext != NULL)//Î²½Úµã²»±ØÔÙ±È½Ï£¬Ã»ÓĞ¿ÉÒÔ±È½ÏµÄ½ÚµãÁË£¬µ«Ò²¿ÉÒÔĞ´³ÉpCurrent != NULL
+    //å¾ªç¯éå†
+    LLNode * pCurrent = stHead->pNext;//è¦è¢«æ¯”å¯¹æ•°æ®çš„èŠ‚ç‚¹ï¼Œä¸èƒ½æ˜¯ç©ºå¤´
+    while(pCurrent->pNext != NULL)//å°¾èŠ‚ç‚¹ä¸å¿…å†æ¯”è¾ƒï¼Œæ²¡æœ‰å¯ä»¥æ¯”è¾ƒçš„èŠ‚ç‚¹äº†ï¼Œä½†ä¹Ÿå¯ä»¥å†™æˆpCurrent != NULL
     {
-        LLNode * pInner = pCurrent;//Ê¼ÖÕ´ú±íÒª±»É¾³ı½ÚµãµÄÇ°Ò»¸ö½Úµã£¬±¾Éí²»»á±»É¾³ı
+        LLNode * pInner = pCurrent;//å§‹ç»ˆä»£è¡¨è¦è¢«åˆ é™¤èŠ‚ç‚¹çš„å‰ä¸€ä¸ªèŠ‚ç‚¹ï¼Œæœ¬èº«ä¸ä¼šè¢«åˆ é™¤
         while(pInner->pNext != NULL)
         {
             if(pInner->pNext->Data == pCurrent->Data)
@@ -193,27 +193,27 @@ void DeleteSame(LLNode * stHead)//* Á´±íÈ¥ÖØ
                 free(pTemp);
                 stHead->Data--;
             }
-            else pInner = pInner->pNext;//·ÀÖ¹ÒÅÂ©²¹ÉÏÀ´µÄ½Úµã
+            else pInner = pInner->pNext;//é˜²æ­¢é—æ¼è¡¥ä¸Šæ¥çš„èŠ‚ç‚¹
         }
         pCurrent = pCurrent->pNext;
     }
 }
 
-void DeleteNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İÉ¾³ı½Úµã
+void DeleteNodeByData(LLNode * stHead, int Data)//* é€šè¿‡æ•°æ®åˆ é™¤èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0)
         return;
     LLNode * pCurrent = stHead;
-    while(pCurrent->pNext != NULL)//* ½Úµã²»ÄÜÊÇÎ²½Úµã 
+    while(pCurrent->pNext != NULL)//* èŠ‚ç‚¹ä¸èƒ½æ˜¯å°¾èŠ‚ç‚¹ 
     {
-        if(pCurrent->pNext->Data == Data)//½ÚµãµÄÏÂÒ»¸ö½Úµã·ûºÏÒªÇó
+        if(pCurrent->pNext->Data == Data)//èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹ç¬¦åˆè¦æ±‚
         {
-            //ÊÍ·Å¡¢Á´½Ó
+            //é‡Šæ”¾ã€é“¾æ¥
             LLNode * pTemp = pCurrent->pNext;
             pCurrent->pNext = pTemp->pNext;
             free(pTemp);
-            //ÊıÁ¿¼õÒ»
+            //æ•°é‡å‡ä¸€
             stHead->Data --;
         }
         else
@@ -221,26 +221,26 @@ void DeleteNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İÉ¾³ı½Úµã
     }
 }
 
-void DeleteNodeByIndex(LLNode * stHead, int Index)//* Í¨¹ıÏÂ±êÉ¾³ı½Úµã
+void DeleteNodeByIndex(LLNode * stHead, int Index)//* é€šè¿‡ä¸‹æ ‡åˆ é™¤èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0 || Index < 0 || Index + 1 > stHead->Data)
         return;
-    //Ñ­»·ÕÒµ½Ö¸¶¨½ÚµãµÄÇ°Ò»¸ö½Úµã
+    //å¾ªç¯æ‰¾åˆ°æŒ‡å®šèŠ‚ç‚¹çš„å‰ä¸€ä¸ªèŠ‚ç‚¹
     LLNode * pCurrent = stHead;
     for(int i = 0; i < Index; i++)
         pCurrent = pCurrent->pNext;
-    //ÊÍ·Å½Úµã£¬ÖØĞÂÁ´½Ó 
+    //é‡Šæ”¾èŠ‚ç‚¹ï¼Œé‡æ–°é“¾æ¥ 
     LLNode * pTemp = pCurrent->pNext;
     pCurrent->pNext = pTemp->pNext;
     free(pTemp);
-    //½ÚµãÊıÁ¿¼õÒ»
+    //èŠ‚ç‚¹æ•°é‡å‡ä¸€
     stHead->Data --;
 }
 
-void ChangeNodeByData(LLNode * stHead, int OldData, int NewData)//* Í¨¹ıÊı¾İĞŞ¸Ä½Úµã
+void ChangeNodeByData(LLNode * stHead, int OldData, int NewData)//* é€šè¿‡æ•°æ®ä¿®æ”¹èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0)
         return;
     LLNode * pTemp = FindNodeByData(stHead, OldData);
@@ -248,12 +248,12 @@ void ChangeNodeByData(LLNode * stHead, int OldData, int NewData)//* Í¨¹ıÊı¾İĞŞ¸Ä
     pTemp->Data = NewData;
 }
 
-void ChangeAllNodeByData(LLNode * stHead, int OldData, int NewData)//* Í¨¹ıÊı¾İĞŞ¸ÄËùÓĞ·ûºÏÒªÇóµÄ½Úµã
+void ChangeAllNodeByData(LLNode * stHead, int OldData, int NewData)//* é€šè¿‡æ•°æ®ä¿®æ”¹æ‰€æœ‰ç¬¦åˆè¦æ±‚çš„èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0)
         return;
-    LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
+    LLNode * pCurrent = stHead->pNext;//! æ³¨æ„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ç©ºå¤´ï¼Œåªå­˜æ”¾<èŠ‚ç‚¹æ•°é‡>
     while(pCurrent != NULL)
     {
         if(pCurrent->Data == OldData)
@@ -262,9 +262,9 @@ void ChangeAllNodeByData(LLNode * stHead, int OldData, int NewData)//* Í¨¹ıÊı¾İĞ
     }
 }
 
-void ChangeNodeByIndex(LLNode * stHead, int Index, int Data)//* Í¨¹ıÏÂ±êĞŞ¸Ä½Úµã
+void ChangeNodeByIndex(LLNode * stHead, int Index, int Data)//* é€šè¿‡ä¸‹æ ‡ä¿®æ”¹èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)
         return;
     LLNode * pTemp = FindNodeByIndex(stHead, Index);
@@ -272,12 +272,12 @@ void ChangeNodeByIndex(LLNode * stHead, int Index, int Data)//* Í¨¹ıÏÂ±êĞŞ¸Ä½Úµã
     pTemp->Data = Data;
 }  
 
-LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
+LLNode * FindNodeByData(LLNode * stHead, int Data)//* é€šè¿‡æ•°æ®æŸ¥æ‰¾èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data <= 0)
         return NULL;
-    LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
+    LLNode * pCurrent = stHead->pNext;//! æ³¨æ„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ç©ºå¤´ï¼Œåªå­˜æ”¾<èŠ‚ç‚¹æ•°é‡>
     while(pCurrent != NULL)
     {
         if(pCurrent->Data == Data)
@@ -287,26 +287,26 @@ LLNode * FindNodeByData(LLNode * stHead, int Data)//* Í¨¹ıÊı¾İ²éÕÒ½Úµã
     return NULL;
 }
 
-LLNode * FindNodeByIndex(LLNode * stHead, int Index)//* Í¨¹ıÏÂ±ê²éÕÒ½Úµã
+LLNode * FindNodeByIndex(LLNode * stHead, int Index)//* é€šè¿‡ä¸‹æ ‡æŸ¥æ‰¾èŠ‚ç‚¹
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
-    if(stHead == NULL || stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)//²éÕÒÒÑ¾­´æÔÚµÄ½Úµã
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
+    if(stHead == NULL || stHead->Data <= 0 || Index < -1 || Index + 1 > stHead->Data)//æŸ¥æ‰¾å·²ç»å­˜åœ¨çš„èŠ‚ç‚¹
         return NULL;
     if(Index == -1)
         return stHead;
-    LLNode * pCurrent = stHead->pNext;//! ×¢ÒâµÚÒ»¸ö½ÚµãÊÇ¿ÕÍ·£¬Ö»´æ·Å<½ÚµãÊıÁ¿>
-    for(int i = 0; i < Index; i++)//! ÒÑ¾­ÀûÓÃ½ÚµãÊıÁ¿ÅÅ³ıÏÂ±ê¹ı´óµÄ¿ÉÄÜĞÔ£¬ËùÒÔÒ»¶¨ÄÜÕÒµ½½Úµã£¬¿ÉÒÔÓÃforÑ­»·
+    LLNode * pCurrent = stHead->pNext;//! æ³¨æ„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹æ˜¯ç©ºå¤´ï¼Œåªå­˜æ”¾<èŠ‚ç‚¹æ•°é‡>
+    for(int i = 0; i < Index; i++)//! å·²ç»åˆ©ç”¨èŠ‚ç‚¹æ•°é‡æ’é™¤ä¸‹æ ‡è¿‡å¤§çš„å¯èƒ½æ€§ï¼Œæ‰€ä»¥ä¸€å®šèƒ½æ‰¾åˆ°èŠ‚ç‚¹ï¼Œå¯ä»¥ç”¨forå¾ªç¯
         pCurrent = pCurrent->pNext;
     return pCurrent;
 }
 
-void FreeList(LLNode * stHead)//* ÊÍ·ÅÁ´±í
+void FreeList(LLNode * stHead)//* é‡Šæ”¾é“¾è¡¨
 {
-    //²ÎÊıºÏ·¨ĞÔ¼ì²â
+    //å‚æ•°åˆæ³•æ€§æ£€æµ‹
     if(stHead == NULL || stHead->Data < 0)
         return;
     LLNode * pCurrent = stHead->pNext;
-    while(pCurrent != NULL)//ÓĞĞèÒªÊÍ·ÅµÄ½Úµã
+    while(pCurrent != NULL)//æœ‰éœ€è¦é‡Šæ”¾çš„èŠ‚ç‚¹
     {
         LLNode * pTemp = pCurrent;
         pCurrent = pCurrent->pNext;
@@ -316,10 +316,10 @@ void FreeList(LLNode * stHead)//* ÊÍ·ÅÁ´±í
     stHead->Data = 0;
 }
 
-void PrintList(LLNode stHead)//* ´òÓ¡Á´±í
+void PrintList(LLNode stHead)//* æ‰“å°é“¾è¡¨
 {
     LLNode * pCurrent = stHead.pNext;
-    printf("Á´±íÓĞ%d¸ö½Úµã\n", stHead.Data);
+    printf("é“¾è¡¨æœ‰%dä¸ªèŠ‚ç‚¹\n", stHead.Data);
     while(pCurrent != NULL)
     {
         printf("%d ", pCurrent->Data);

@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    //* 打印左下角乘法表
+    //* 鎵撳嵃宸︿笅瑙掍箻娉曡〃
     for(unsigned char i = 1; i < 10; i++)
     {
         for(unsigned char j = 1; j <=i; j++)
@@ -13,7 +13,7 @@ int main(void)
         printf("\n");
     }
 
-    //* 打印左上角乘法表
+    //* 鎵撳嵃宸︿笂瑙掍箻娉曡〃
     for(unsigned char i = 9; i > 0; i--)
     {
         for(unsigned char j = 1; j <=i; j++)
@@ -23,7 +23,7 @@ int main(void)
         printf("\n");
     }
 
-    //* 打印右上角乘法表
+    //* 鎵撳嵃鍙充笂瑙掍箻娉曡〃
     for(unsigned char i = 1; i < 10; i++)
     {
         for(unsigned char j = 1; j <=9; j++)
@@ -34,7 +34,7 @@ int main(void)
         printf("\n");
     }
 
-    //* 打印右下角乘法表
+    //* 鎵撳嵃鍙充笅瑙掍箻娉曡〃
     for(unsigned char i = 9; i > 0; i--)
     {
         for(unsigned char j = 1; j <=9; j++)
